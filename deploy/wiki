@@ -9,5 +9,5 @@ require 'junebug/config'
 
 JUNEBUG_ROOT = ENV['JUNEBUG_ROOT'] = File.dirname(File.expand_path(__FILE__))
 
-Daemons.run(Junebug::Config.script, :dir_mode=>:normal, :dir=> JUNEBUG_ROOT)
+Daemons.run(Junebug::Config.script, :dir_mode=>:normal, :dir=>JUNEBUG_ROOT)
 

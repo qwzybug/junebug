@@ -122,7 +122,7 @@ module Junebug::Controllers
   class Static < R '/static/(.+)'         
     MIME_TYPES = {'.css' => 'text/css', '.js' => 'text/javascript', '.jpg' => 'image/jpeg'}
     #PATH = __FILE__[/(.*)\//, 1]
-    PATH = '.'
+    PATH = ENV['JUNEBUG_ROOT'] || '.'
     
     def get(path)
       @headers['Content-Type'] = MIME_TYPES[path[/\.\w+$/, 0]] || "text/plain"
