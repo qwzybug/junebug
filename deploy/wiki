@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.dirname(__FILE__) + "/../lib"
+
+require 'rubygems'
+require 'daemons'
+require 'fileutils'
+require 'junebug/config'
+
+JUNEBUG_ROOT = ENV['JUNEBUG_ROOT'] = File.dirname(File.expand_path(__FILE__))
+
+Daemons.run(Junebug::Config.script, :dir_mode=>:normal, :dir=> JUNEBUG_ROOT)
+

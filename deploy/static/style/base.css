@@ -1,0 +1,248 @@
+
+a:link, a:visited {
+    text-decoration: none;
+    color: #00f;
+}
+a:hover {
+    text-decoration: underline;
+    color: #00f;
+}
+
+
+form { display: inline; }
+
+span.actions a {
+    margin-right: 5px;
+}
+
+input.button {
+    margin: 5px 4px;
+}
+
+input, textarea {
+    padding: 2px;
+    margin-bottom: 5px;
+/*    font-family:"Bitstream Vera Sans Mono", "Monaco", "Courier", monospace;*/
+}
+
+input, textarea, pre, code {
+    font-family: monospace;
+}
+
+textarea {
+    width: 100%;
+}
+
+del {
+    color: #999;
+    background-color: #ddd;
+}
+
+ins {
+    background-color: #cfc;
+    text-decoration: none;
+    color: #000;
+}
+
+	
+/* PAGE STRUCTURE */
+body {
+    background:#d7d7d7;
+}
+
+#doc {
+    font-family: 'Lucida Grande', 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+#hd {
+    border-top: 6px solid #4682b4;
+    background-color: #191970;
+    padding: 8px 25px;
+    color: #ffffff;
+}
+
+#hd a {
+    color: #ffffff;
+}
+
+#hd h1 a {
+    color: #ffffff;
+}
+
+#hd h1 {
+    font-size: 167%;
+    padding-bottom: 5px;
+    font-weight: normal;
+}
+
+#bd {
+    background-color: #ffffff;
+	border:5px solid #929292;
+	border-width:0 5px 5px 0;
+}
+
+#yui-main{
+}
+
+.yui-b{
+}
+
+#ft {
+    border: 1px solid #eee;
+    background-color: #ddd;
+    color: #333;
+    font-size: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    line-height: 150%;
+}
+
+.formbox {
+    border-top: 1px solid #ccc;
+    background-color: #eee;
+    padding: 0 15px 10px 15px;
+}
+
+.login {
+    position: absolute;
+    left: 50%;
+    width: 220px;
+    margin-left: -150px;
+    margin-top: 50px;
+    background-color: #ddf;
+    padding: 20px 40px;
+    border: 4px solid #aaf;
+    text-align: center;
+}
+
+.login h1 {
+    font-size: 140%;
+    margin-bottom: 10px;
+}
+
+.login label {
+    font-weight: bold;
+}
+
+.login p.notice {
+    font-weight: bold;
+    background-color: #ffe;
+    border: 2px solid #ffa;
+    padding: 3px;
+    margin: 10px 0;
+    color: #822;
+}
+
+.admin {
+    float: left;
+/*    background-color: #ffa;*/
+}
+
+.admin input.button {
+    background-color: #ffa;
+    font-size: 85%;
+    margin: 0;
+}
+
+/* WIKI CONTENT STYLES */
+.content {
+    font-size: 114%;
+    padding: 25px;
+    min-height: 300px;
+}
+
+.content h2, .content h3, .content h4 {
+/*    color: #04766f;*/
+    color: #548b54;
+}
+
+.content h1 {
+    font-size:  182%;
+    margin-bottom: 10px;
+}
+
+.content h2 {
+    font-size:  129%;
+    border-bottom: 2px dotted #bbb;
+    margin-top: 25px;
+    margin-bottom: 10px;
+/*    background-color: #d6fbf4;*/
+}
+
+.content h3 {
+    font-size:  129%;
+    margin-top: 25px;
+    margin-bottom: 10px;
+/*    border-bottom: 1px dotted #bbb;*/
+}
+
+.content h4 {
+    font-size:  107%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.content ul {
+    list-style-type: square;
+    margin: 10px 0px 10px 15px;
+}
+
+.content li {
+    line-height: 150%;
+}
+
+.content ol {
+    list-style-type: decimal;
+    margin: 10px 0px 10px 24px;
+}
+
+.content p {
+    line-height: 130%;
+    margin: 10px 0px;
+}
+
+.content em {
+    font-style: italic;
+}
+
+.content strong {
+    font-weight: bold;
+    background-color: #ffffcc;
+    padding: 3px;
+}
+
+.content label {
+    font-weight: bold;
+}
+
+.content code {
+/*    font-family:"Bitstream Vera Sans Mono", "Monaco", "Courier", monospace;*/
+    background: #eee;
+    padding: 2px;
+}
+
+.content pre code{
+    padding: 0px;
+}
+
+.content pre {
+/*    font-family:"Bitstream Vera Sans Mono", "Monaco", "Courier", monospace;*/
+    display: block;
+    background: #eee;
+    border: 1px solid #ddd;
+    padding: 8px 20px;
+}
+
+.content table {
+}
+
+.content th, .content td {
+    padding: 2px 5px;
+    border: solid #eee;
+}
+
+.content th {
+    font-weight: bold;
+    background-color: #d7e0ff;
+}
+  /* http://longren.org/2006/09/27/wrapping-text-inside-pre-tags */

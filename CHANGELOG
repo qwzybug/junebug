@@ -1,0 +1,70 @@
+v0.0.14 2006-11-14
+
+ * Page title cleanup
+ * Rake task reorg
+ * Dump task
+ * Added error checking to generator
+
+v0.0.13 2006-11-14
+
+ * Link style improvement/simplification
+ * Autolinking urls
+ * use user.role to determine admin rights
+ * is_admin?, logged_in?
+
+v0.0.12 2006-11-13
+
+ * content div bugfix
+
+v0.0.11 2006-11-13
+
+ * Added revert
+ * Versioning bugfix
+ * Changed delete operation
+ * Added 'role' user field
+
+v0.0.10 2006-11-12
+
+ * Submit bugfix
+ * More unit tests
+ 
+v0.0.9 2006-11-10
+
+ * Mosquito unit tests
+
+v0.0.8 2006-11-08
+
+ * Style work
+ * Add rss link to head
+ * Stylesheet update rake task
+
+v0.0.7 2006-11-07
+
+ * Redirect bugfix for proxied sites
+ 
+v0.0.6 2006-11-07
+
+  * Delete pages
+  * More style work
+
+v0.0.5 2006-11-06
+
+  * Style cleanups
+  * Security fix
+  * Format test page
+
+v0.0.4 2006-11-05
+
+  * Readonly pages
+  * Start page
+  * Bugfixes
+
+v0.0.3 2006-10-30
+
+  * User accounts
+  * Daemonize
+  * Default page fixtures
+
+v0.0.2 2006-10-22
+
+  * Initial release

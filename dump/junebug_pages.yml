@@ -1,0 +1,144 @@
+--- 
+- updated_at: 2006-11-07 18:24:43 -08:00
+  title: JunebugWiki
+  readonly: true
+  body: |
+    h1. Welcome to Junebug!
+    
+    To complete setup of you new wiki, here are a few things you should do:
+    
+    
+    h3. 1. Login to your account
+    
+    When you created this wiki, the username and password you submitted were used to set up an account for you.  Now click the 'sign in' link at the upper right and sign in.
+    
+    Once you sign in you will see your username in the upper right corner.
+    
+    
+    h3. 2. Set the start page
+    
+    This page will always be the default start page for a new wiki.  Probably not what you want, right?  Fortunately, it is easy to change.  Open the config.yml file (in your wiki directory) with any texteditor, and change the startpage field to the page you want.
+    
+    Next, in your wiki directory, run the command:
+    
+     ./wiki restart
+    
+    The next time you click on the 'Home' link in the nav bar, you will be taken to your new start page.  If the page doesn't already exist, you will first be asked to login, and then you will be presented with an edit form to create the page.
+    
+    
+    h3. 3. Create some pages!
+    
+    If you have any trouble, or need some help getting started, click on the 'Help' link in the nav bar.  The documentation is pretty sparse right now, but I'm working on it!
+
+  id: 1
+  version: 1
+  user_id: 1
+  created_at: 2006-10-29 16:19:34 -08:00
+- updated_at: 2006-11-07 18:24:43 -08:00
+  title: JunebugHelp
+  readonly: 
+  body: This is a work in progress
+  id: 2
+  version: 1
+  user_id: 1
+  created_at: 2006-11-01 00:10:07 -08:00
+- updated_at: 2006-11-07 18:24:43 -08:00
+  title: FormatTest
+  readonly: 
+  body: |-
+    See "this page":http://hobix.com/textile/ for the full range of formatting options
+    
+    h2. Headers
+    
+    h1. Header 1
+    
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    
+    h2. Header 2
+    
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    
+    h3. Header 3
+    
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    
+    h4. Header 4
+    
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    
+    h2. Structural emphasis
+    
+    This is _emphasis_ (italic)
+    
+    This is *strong* (bold)
+    
+    This is @code@
+    
+     more code
+     @difftext = diff( @v1_markup , @v2_markup)
+    
+    This is -deleted- text
+    
+    This is +inserted+ text
+    
+    Arbitrary style: I'm %{color:red}unaware% of most soft drinks.
+    
+    
+    h2. Arbitrary html, pre, and code
+    
+    Inserting arbitrary html (pre/code)
+    
+    <pre><code>a.gsub!( /</, '' )</code></pre>
+    
+    Inserting arbitrary html (pre/code)
+    
+    <pre>
+    <code>a.gsub!( /</, '' )</code>
+    </pre>
+    
+    Arbitrary html (pre)
+    
+    <pre>
+    a.gsub!( /</, '' )
+    </pre>
+    
+    Code by indenting
+    
+     more code
+     @difftext = diff( @v1_markup , @v2_markup)
+    
+    h2. Lists
+    
+    # A first item
+    # A second item
+    # A third
+    
+    # Fuel could be:
+    ## Coal
+    ## Gasoline
+    ## Electricity
+    # Humans need only:
+    ## Water
+    ## Protein
+    
+    * A first item
+    * A second item
+    * A third
+    
+    h2. External references
+    
+    This is a link: "Google":http://google.com
+    
+    Images: !/static/images/feed-icon-14x14.png! 
+    
+    
+    h2. Tables
+    
+    |_. name |_. age |_. sex |
+    | joan | 24 | f |
+    | archie | 29 | m |
+    | bella | 45 | f |
+  id: 3
+  version: 1
+  user_id: 1
+  created_at: 2006-11-06 09:40:53 -08:00

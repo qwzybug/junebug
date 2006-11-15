@@ -1,0 +1,26 @@
+curl http://localhost:3301/JunebugWiki | tidy -i -wrap 1000 | mate
+
+
+To hack on junebug source:
+
+cd deploy
+./wiki run|start|stop|restart
+
+
+To manipulate sqlite3:
+
+sqlite3 junebug.db
+
+.schema
+
+TODO
+
+* should probably separate signup/login
+* signup with captcha
+* authentication tests
+* attachments
+* dump pages
+* more tests
+* help pages
+* improve diff page
+
