@@ -26,14 +26,18 @@ module Junebug::Models
 
   class Page < Base
     belongs_to :user
-    #PAGE_LINK = /\[\[([^\]|]*)[|]?([^\]]*)\]\]/
+    PAGE_LINK = /\[\[([^\]|]*)[|]?([^\]]*)\]\]/
     #before_save { |r| r.title = r.title.underscore }
-    PAGE_LINK = /([A-Z][a-z]+[A-Z]\w+)/
+    #PAGE_LINK = /([A-Z][a-z]+[A-Z]\w+)/
     validates_uniqueness_of :title
-    validates_format_of :title, :with => PAGE_LINK
+    validates_format_of :title, :with => /^\w[\w ]*$/
     validates_presence_of :title
     acts_as_versioned
     non_versioned_fields.push 'title'
+    
+    def title=(text)
+      write_attribute(:title, text.strip.squeeze(' '))
+    end
   end
   
   class Page::Version < Base

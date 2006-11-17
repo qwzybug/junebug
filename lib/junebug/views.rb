@@ -65,7 +65,7 @@ module Junebug::Views
             br
             input :value => @page.title, :name => 'post_title', :size => 30, 
                   :type => 'text'
-            small " [ CamelCase only ]"
+            small " word characters [0-9A-Za-z_] and spaces only"
           }
           p {
             label 'Page Content'
@@ -208,8 +208,8 @@ module Junebug::Views
     return '' if txt.blank?
     txt.gsub!(Junebug::Models::Page::PAGE_LINK) do
       page = title = $1
-#      title = $2 unless $2.empty?
-#      page = page.gsub /\W/, '_'
+      title = $2 unless $2.empty?
+      #page = page.gsub /\W/, '_'
       if Junebug::Models::Page.find(:all, :select => 'title').collect { |p| p.title }.include?(page)
         %Q{<a href="#{self/R(Show, page)}">#{title}</a>}
       else

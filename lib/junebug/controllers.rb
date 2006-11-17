@@ -9,17 +9,17 @@ module Junebug::Controllers
     end
   end
 
-  class Show < R '/(\w+)', '/(\w+)/(\d+)'
+  class Show < R '/([\w ]+)', '/([\w ]+)/(\d+)'
     def get page_name, version = nil
       @page_title = page_name
       #redirect(Edit, page_name, 1) and return unless @page = Page.find_by_title(page_name)
-      redirect("#{Junebug.config['url']}/#{page_name}/1/edit") and return unless @page = Page.find_by_title(page_name)
+      redirect("#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}/1/edit") and return unless @page = Page.find_by_title(page_name)
       @version = (version.nil? or version == @page.version.to_s) ? @page : @page.versions.find_by_version(version)
       render :show
     end
   end
 
-  class Edit < R '/(\w+)/edit', '/(\w+)/(\d+)/edit' 
+  class Edit < R '/([\w ]+)/edit', '/([\w ]+)/(\d+)/edit' 
     def get page_name, version = nil
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
       @page_title = "Edit #{page_name}"
@@ -36,15 +36,15 @@ module Junebug::Controllers
         attrs[:readonly] = input.post_readonly if is_admin?
         if Page.find_or_create_by_title(page_name).update_attributes( attrs )
           # redirect Show, input.post_title
-          redirect "#{Junebug.config['url']}/#{input.post_title}"
+          redirect "#{Junebug.config['url']}/#{input.post_title.gsub(/ /,'+')}"
         end
       else
-        redirect "#{Junebug.config['url']}/#{page_name}"
+        redirect "#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}"
       end
     end
   end
   
-  class Delete < R '/(\w+)/delete'
+  class Delete < R '/([\w ]+)/delete'
     def get page_name
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
       Page.find_by_title(page_name).destroy() if is_admin?
@@ -53,15 +53,15 @@ module Junebug::Controllers
     
   end
 
-  class Revert < R '/(\w+)/(\d+)/revert'
+  class Revert < R '/([\w ]+)/(\d+)/revert'
     def get page_name, version
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
       Page.find_by_title(page_name).revert_to!(version) if is_admin?
-      redirect "#{Junebug.config['url']}/#{page_name}"
+      redirect "#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}"
     end
   end
 
-  class Versions < R '/(\w+)/versions'
+  class Versions < R '/([\w ]+)/versions'
     def get page_name
       @page_title = "Version History: #{page_name}"
       @page = Page.find_by_title(page_name)
@@ -78,7 +78,7 @@ module Junebug::Controllers
     end
   end
 
-  class Backlinks < R '/(\w+)/backlinks'
+  class Backlinks < R '/([\w ]+)/backlinks'
     def get page_name
       @page = Page.find_by_title(page_name)
       @page_title = "Backlinks for: #{page_name}"
@@ -95,7 +95,7 @@ module Junebug::Controllers
     end
   end
   
-  class Diff < R '/(\w+)/(\d+)/(\d+)/diff'
+  class Diff < R '/([\w ]+)/(\d+)/(\d+)/diff'
     include HTMLDiff
     def get page_name, v1, v2
       @page_title = "Diff: #{page_name}"
