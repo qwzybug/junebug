@@ -24,7 +24,7 @@ gem_spec = Gem::Specification.new do |s|
   s.files = FileList['README','LICENSE','CHANGELOG','Rakefile','lib/**/*','deploy/**/*','dump/**/*']
   s.test_files = FileList['test/**/*']
 
-  s.add_dependency('mongrel', '>=0.3.13.4')
+  s.add_dependency('mongrel', '>=0.3.13.3')
   s.add_dependency('camping', '>=1.5')
   s.add_dependency('RedCloth', '>=3.0.4')
   s.add_dependency('daemons')
