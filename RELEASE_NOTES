@@ -1,0 +1,7 @@
+v0.0.15
+
+The wikiword syntax changed in this release from just straight WikiLink to [[WikiLink]].  Just using camelcase was having trouble coexisting with textile, so I opted instead for the instiki convention which is less problematic.
+
+This change will reqire updating any pre-existing pages to the new wikiword syntax.
+
+Note that this format also supports the [[WikiLink|different label]] syntax.

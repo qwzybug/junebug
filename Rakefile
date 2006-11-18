@@ -7,11 +7,13 @@ require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
+require 'junebug'
+
 Gem.manage_gems
 
 gem_spec = Gem::Specification.new do |s|
   s.name = 'junebug'
-  s.version = '0.0.14'
+  s.version = '0.0.15'
   s.summary = "Junebug is a minimalist ruby wiki."
   s.description = "Junebug is a minimalist ruby wiki running on Camping."
   s.author = "Tim Myrtle"
@@ -21,7 +23,7 @@ gem_spec = Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.bindir = 'bin'
   s.executables = ['junebug']
-  s.files = FileList['README','LICENSE','CHANGELOG','Rakefile','lib/**/*','deploy/**/*','dump/**/*']
+  s.files = FileList['README', 'LICENSE', 'CHANGELOG', 'RELEASE_NOTES', 'Rakefile', 'lib/**/*', 'deploy/**/*', 'dump/**/*']
   s.test_files = FileList['test/**/*']
 
   s.add_dependency('mongrel', '>=0.3.13.3')
@@ -58,7 +60,6 @@ end
 desc 'Test the campground.'
 Rake::TestTask.new(:test) do |t|
 #  t.libs << 'lib'
-  cp 'deploy/config.yml', '.'
   t.pattern = 'test/**/*_test.rb'
   t.verbose = true
 end

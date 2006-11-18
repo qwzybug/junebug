@@ -17,6 +17,8 @@ require 'fileutils'
 
 module Junebug
   include Camping::Session
+  
+  VERSION='0.0.15'
 
   def self.create
     Junebug::Models.create_schema :assume => (Junebug::Models::Page.table_exists? ? 1.0 : 0.0)

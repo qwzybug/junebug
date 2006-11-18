@@ -4,11 +4,6 @@ $:.unshift File.dirname(__FILE__) + "/../lib"
 require 'rubygems'
 require 'junebug/generator'
 
-if ARGV.first.empty?
-  puts "Usage: junebug wikiname"
-  exit
-end
-
 ENV['INTERACTIVE']='1'
 
 Junebug::Generator.generate(ARGV)

@@ -6,8 +6,25 @@ require 'junebug/models'
 module Junebug
   module Generator
     extend self
-  
+
     def generate(args)
+      if args.empty? || (args[0] == '-h') || (args[0] == '--help')
+        puts <<END
+Usage: junebug [options|wikiname]
+
+Options:
+  -v, --version    Display version
+  -h, --help       Display this page
+
+END
+        return
+      end
+      
+      if (args[0] == '-v') || (args[0] == '--version')
+        puts "Junebug v#{Junebug::VERSION}"
+        return
+      end
+      
       src_root = File.dirname(__FILE__) + '/../../deploy'
       app = ARGV.first
       FileUtils.cp_r(src_root, app)

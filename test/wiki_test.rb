@@ -14,7 +14,6 @@ class JunebugTest < Camping::FunctionalTest
   
   def test_index
     get
-    puts @response
     assert_response :redirect
     assert_redirected_to '/JunebugWiki'
   end
