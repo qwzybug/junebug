@@ -1,11 +1,11 @@
 /* Baseline Junebug style */
 
 a:link, a:visited {
-    text-decoration: none;
+/*    text-decoration: none;*/
     color: #00f;
 }
 a:hover {
-    text-decoration: underline;
+/*    text-decoration: underline;*/
     color: #00f;
 }
 
@@ -68,6 +68,10 @@ body {
 #hd h1 a {
     color: #ffffff;
 }
+#hd h1 a:link, #hd h1 a:visited {
+    text-decoration: none;
+}
+
 
 #hd h1 {
     font-size: 167%;
@@ -151,9 +155,14 @@ body {
     min-height: 300px;
 }
 
-.content h2, .content h3, .content h4 {
+.content h2, .content h3, .content h4, .content h5 {
 /*    color: #04766f;*/
     color: #548b54;
+    border-bottom: 2px dotted #bbb;
+    margin-left: -5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 1px 5px;
 }
 
 .content h1 {
@@ -162,25 +171,31 @@ body {
 }
 
 .content h2 {
-    font-size:  129%;
+    font-size:  140%;
     border-bottom: 2px dotted #bbb;
-    margin-top: 25px;
-    margin-bottom: 10px;
-/*    background-color: #d6fbf4;*/
+/*    margin-top: 25px;*/
+/*    margin-bottom: 10px;*/
+    background-color: #f6f6f6;
 }
 
 .content h3 {
     font-size:  129%;
-    margin-top: 25px;
-    margin-bottom: 10px;
-/*    border-bottom: 1px dotted #bbb;*/
+/*    margin-top: 25px;*/
+/*    margin-bottom: 10px;*/
 }
 
 .content h4 {
     font-size:  107%;
-    margin-top: 15px;
-    margin-bottom: 10px;
+/*    margin-top: 15px;*/
+/*    margin-bottom: 10px;*/
 }
+
+.content h5 {
+    font-size:  100%;
+/*    margin-top: 15px;*/
+/*    margin-bottom: 10px;*/
+}
+
 
 .content ul {
     list-style-type: square;
@@ -197,7 +212,7 @@ body {
 }
 
 .content p {
-    line-height: 130%;
+    line-height: 140%;
     margin: 10px 0px;
 }
 

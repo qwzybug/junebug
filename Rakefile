@@ -29,7 +29,7 @@ gem_spec = Gem::Specification.new do |s|
   s.add_dependency('mongrel', '>=0.3.13.3')
   s.add_dependency('camping', '>=1.5')
   s.add_dependency('RedCloth', '>=3.0.4')
-  s.add_dependency('daemons')
+  s.add_dependency('daemons', '>=1.0.3')
   s.add_dependency('sqlite3-ruby', '>=1.1.0.1')
   s.add_dependency('activerecord', '>=1.14.4')
 end
