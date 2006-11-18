@@ -5,6 +5,7 @@ v0.0.15 2006-11-17
  * Added css for wrapping pre text
  * Changed wikiword syntax to [[link]]
  * Unit testing improvements
+ * Command line help
  
 v0.0.14 2006-11-14
 
