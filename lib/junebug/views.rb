@@ -49,8 +49,8 @@ module Junebug::Views
     }
     if is_admin?
       div.admin {
-        _button 'delete', R(Delete, @page.title), {:onclick=>'return confirm("Sure you want to delete?")'} if @version.version == @page.version
-        _button 'revert to', R(Revert, @page.title, @version.version), {:onclick=>'return confirm("Sure you want to revert?")'} if @version.version != @page.version
+        _button 'delete', R(Delete, @page.title), {:onclick=>"return confirm('Sure you want to delete?')"} if @version.version == @page.version
+        _button 'revert to', R(Revert, @page.title, @version.version), {:onclick=>"return confirm('Sure you want to revert?')"} if @version.version != @page.version
       }
     end
   end
