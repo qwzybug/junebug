@@ -13,7 +13,7 @@ Gem.manage_gems
 
 gem_spec = Gem::Specification.new do |s|
   s.name = 'junebug'
-  s.version = '0.0.15'
+  s.version = Junebug::VERSION
   s.summary = "Junebug is a minimalist ruby wiki."
   s.description = "Junebug is a minimalist ruby wiki running on Camping."
   s.author = "Tim Myrtle"

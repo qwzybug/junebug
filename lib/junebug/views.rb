@@ -260,7 +260,7 @@ module Junebug::Views
       span :style=>'float: right;' do
         text 'Powered by '
         a 'JunebugWiki', :href => 'http://www.junebugwiki.com/'
-        text ' '
+        text " <small>v#{Junebug::VERSION}</small> "
         a :href => Junebug.config['feed'] do
           img :src => '/static/images/feed-icon-14x14.png'
         end
