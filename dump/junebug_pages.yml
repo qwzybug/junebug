@@ -21,7 +21,7 @@
     
     Next, in your wiki directory, run the command:
     
-     ./wiki restart
+     ruby wiki restart
     
     The next time you click on the 'Home' link in the nav bar, you will be taken to your new start page.  If the page doesn't already exist, you will first be asked to login, and then you will be presented with an edit form to create the page.
     
