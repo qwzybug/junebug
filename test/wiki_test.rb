@@ -4,41 +4,60 @@ require File.dirname(__FILE__) + "/../lib/junebug"
 Junebug.create
 include Junebug::Models
 
-# class JunebugTest < Camping::FunctionalTest
-# 
-#   fixtures :junebug_users
-#   
-#   def setup
-#     super
-#   end
-#   
-#   def test_index
-#     get
-#     assert_response :success
-#     assert_match_body %r!>blog<!
-#   end
-# 
-#   def test_view
-#     get '/view/1'
-#     assert_response :success
-#     assert_match_body %r!The quick fox jumped over the lazy dog!
-#   end
-#       
-#   def test_styles
-#     get 'styles.css'
-#     assert_match_body %r!Utopia!
-#   end
-# 
-#   def test_edit_should_require_login
-#     get '/edit/1'
-#     assert_response :success
-#     assert_match_body 'login'
-#   end
-# 
-#   def test_login
-#     page 'login', :username => 'quentin', :password => 'password'
-#     assert_match_body 'login success'
-#   end
+class JunebugTest < Camping::FunctionalTest
+
+  fixtures :junebug_users
+  
+  def setup
+    super
+  end
+  
+  def test_index
+    get
+    puts @response
+    assert_response :redirect
+    assert_redirected_to '/JunebugWiki'
+  end
+
+  def test_start_page
+    get '/JunebugWiki'
+    assert_response :success
+    assert_match_body %r!title>JunebugWiki</title!
+  end
+
+  def test_login
+    post '/login', :username => 'admin', :password => 'password'
+    assert_response :redirect
+    assert_redirected_to '/JunebugWiki'
+    
+    get '/logout'
+    assert_response :redirect
+    assert_redirected_to '/JunebugWiki'
+  end
+
+  def test_required_login
+    get '/JunebugWiki/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
+    
+    get '/JunebugWiki/1/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
+
+    post '/JunebugWiki/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
+
+    get '/JunebugWiki/delete'
+    assert_response :redirect
+    assert_redirected_to '/login'
+
+    get '/JunebugWiki/1/revert'
+    assert_response :redirect
+    assert_redirected_to '/login'
+  end
+
+
 # 
 #   def test_comment
 #     assert_difference(Comment) {
@@ -50,8 +69,8 @@ include Junebug::Models
 #     }
 #   end
 # 
-# end
-# 
+end
+
 class PageTest < Camping::UnitTest
 
   fixtures :junebug_users, :junebug_pages, :junebug_page_versions
@@ -74,6 +93,30 @@ class PageTest < Camping::UnitTest
   end
   
   def test_valid_title
+    page = create(:title => 'TestPage')
+    assert page.valid?
+    
+    page = create(:title => 'Test Page')
+    assert page.valid?
+
+    page = create(:title => 'test page')
+    assert page.valid?
+
+    page = create(:title => 'test_page')
+    assert page.valid?
+        
+    page = create(:title => 'test')
+    assert page.valid?
+    
+    page = create(:title => 't')
+    assert page.valid?
+
+    page = create(:title => '1')
+    assert page.valid?
+
+  end
+  
+  def test_invalid_title
     page = create(:title => nil)
     deny page.valid?
     assert_not_nil page.errors.on(:title)
@@ -82,19 +125,65 @@ class PageTest < Camping::UnitTest
     deny page.valid?
     assert_not_nil page.errors.on(:title)
 
-    page = create(:title => 'Test')
+    page = create(:title => ' ')
+    deny page.valid?
+    assert_not_nil page.errors.on(:title)
+
+    page = create(:title => '*')
+    deny page.valid?
+    assert_not_nil page.errors.on(:title)
+    
+    page = create(:title => 'page-1')
+    deny page.valid?
+    assert_not_nil page.errors.on(:title)
+
+    page = create(:title => 'page\'s')
     deny page.valid?
     assert_not_nil page.errors.on(:title)
   end
   
   def test_unique_title
-    page1 = create
+    page1 = create(:title => 'TestTitle')
     assert page1.valid?
-
+    
+    # identical
     page2 = create
     deny page2.valid?
     assert_not_nil page2.errors.on(:title)
+
+    # lowercase
+    page2 = create(:title => 'testtitle')
+    assert page2.valid?
+
+    # create page with underscores
+    page1 = create(:title => 'test_title')
+    assert page1.valid?
+
+    # different from page with spaces
+    page1 = create(:title => 'test title')
+    assert page1.valid?
   end
+
+  def test_spaces
+    page1 = create(:title => 'TestTitle5')
+    assert page1.valid?
+    assert_equal 'TestTitle5', page1.title
+    
+    # test strip
+    page1 = create(:title => ' TestTitle6 ')
+    assert page1.valid?
+    assert_equal 'TestTitle6', page1.title
+
+    page1 = create(:title => ' Test Title 7 ')
+    assert page1.valid?
+    assert_equal 'Test Title 7', page1.title
+    
+    # test squeeze
+    page1 = create(:title => '  Test  Title  8  ')
+    assert page1.valid?
+    assert_equal 'Test Title 8', page1.title
+  end
+
 
 private
 

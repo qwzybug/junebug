@@ -51,12 +51,14 @@ task :clean => :clobber_package do
   rm 'deploy/junebug.log', :force => true
   Dir['deploy/dump/*'].each { |ext| rm ext }
   rm 'test/test.log', :force => true
+  rm 'config.yml', :force => true
 end
 
 
 desc 'Test the campground.'
 Rake::TestTask.new(:test) do |t|
 #  t.libs << 'lib'
+  cp 'deploy/config.yml', '.'
   t.pattern = 'test/**/*_test.rb'
   t.verbose = true
 end

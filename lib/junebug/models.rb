@@ -30,13 +30,13 @@ module Junebug::Models
     #before_save { |r| r.title = r.title.underscore }
     #PAGE_LINK = /([A-Z][a-z]+[A-Z]\w+)/
     validates_uniqueness_of :title
-    validates_format_of :title, :with => /^\w[\w ]*$/
+    validates_format_of :title, :with => /^[\w ]+$/
     validates_presence_of :title
     acts_as_versioned
     non_versioned_fields.push 'title'
     
     def title=(text)
-      write_attribute(:title, text.strip.squeeze(' '))
+      write_attribute(:title, text ? text.strip.squeeze(' ') : text)
     end
   end
   
