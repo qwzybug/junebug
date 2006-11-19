@@ -148,7 +148,7 @@ module Junebug::Controllers
       if @user
         if @user.password == input.password
           @state.user = @user
-          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
+          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(Junebug.config['url'] + input.return_to)
           return
         else
           @notice = 'Authentication failed'
@@ -170,7 +170,7 @@ module Junebug::Controllers
   class Logout
       def get
         @state.user = nil
-        input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
+        input.return_to.blank? ? redirect(Junebug.startpage) : redirect(Junebug.config['url'] + input.return_to)
       end
   end
 end

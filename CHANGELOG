@@ -1,3 +1,7 @@
+v0.0.17 2006-11-19
+
+ * Quick bugfix for login redirects behind proxy
+
 v0.0.16 2006-11-19
 
  * Style tweaks
