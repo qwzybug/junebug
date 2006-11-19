@@ -2,11 +2,11 @@
 
 a:link, a:visited {
 /*    text-decoration: none;*/
-    color: #00f;
+    color: #0000cc;
 }
 a:hover {
 /*    text-decoration: underline;*/
-    color: #00f;
+    color: #0000cc;
 }
 
 form { display: inline; }
@@ -55,8 +55,8 @@ body {
 }
 
 #hd {
-    border-top: 6px solid #4682b4;
-    background-color: #191970;
+/*    border-top: 6px solid #809fff;*/
+    background-color: #6677aa;
     padding: 8px 25px;
     color: #ffffff;
 }
@@ -157,7 +157,8 @@ body {
 
 .content h2, .content h3, .content h4, .content h5 {
 /*    color: #04766f;*/
-    color: #548b54;
+    font-weight: normal;
+    color: #447744;
     border-bottom: 2px dotted #bbb;
     margin-left: -5px;
     margin-top: 20px;
@@ -175,7 +176,7 @@ body {
     border-bottom: 2px dotted #bbb;
 /*    margin-top: 25px;*/
 /*    margin-bottom: 10px;*/
-    background-color: #f6f6f6;
+    background-color: #edf9ef;
 }
 
 .content h3 {
@@ -212,8 +213,8 @@ body {
 }
 
 .content p {
-    line-height: 140%;
-    margin: 10px 0px;
+    line-height: 145%;
+    margin: 15px 0px;
 }
 
 .content em {
@@ -222,8 +223,8 @@ body {
 
 .content strong {
     font-weight: bold;
-    background-color: #ffffcc;
-    padding: 3px;
+/*    background-color: #ffffcc;
+    padding: 3px;*/
 }
 
 .content label {
@@ -232,7 +233,7 @@ body {
 
 .content code {
 /*    font-family:"Bitstream Vera Sans Mono", "Monaco", "Courier", monospace;*/
-    background: #eee;
+    background: #f4f4f4;
     padding: 2px;
 }
 
@@ -243,7 +244,7 @@ body {
 .content pre {
 /*    font-family:"Bitstream Vera Sans Mono", "Monaco", "Courier", monospace;*/
     display: block;
-    background: #eee;
+    background: #f4f4f4;
     border: 1px solid #ddd;
     padding: 8px 20px;
 }
