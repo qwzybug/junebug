@@ -1,3 +1,8 @@
+v0.0.16 2006-11-19
+
+ * Style tweaks
+ * Login/logout redirects you back to the page you were on
+
 v0.0.15 2006-11-17
 
  * Loosen up mongrel requirements for windows users -- thanks deejay
