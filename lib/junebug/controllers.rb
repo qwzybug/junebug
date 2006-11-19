@@ -137,27 +137,31 @@ module Junebug::Controllers
   class Login
     def get
       @page_title = "Login/Create Account"
+      @return_to = input.return_to
       render :login
     end
 
     def post
       @page_title = "Login/Create Account"
       @user = User.find :first, :conditions => ['username = ? AND password = ?', input.username, input.password]
+      @return_to = input.return_to
       if @user
         if @user.password == input.password
           @state.user = @user
-          redirect(Junebug.startpage); return
+          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
+          return
         else
           @notice = 'Authentication failed'
         end
       else
-          @user = User.create :username=>input.username, :password=>input.password
-          if @user.errors.empty?
-            @state.user = @user
-            redirect(Junebug.startpage); return
-          else
-            @notice = @user.errors.full_messages[0]
-          end
+        @user = User.create :username=>input.username, :password=>input.password
+        if @user.errors.empty?
+          @state.user = @user
+          redirect(Junebug.startpage)
+          return
+        else
+          @notice = @user.errors.full_messages[0]
+        end
       end
       render :login
     end
@@ -166,7 +170,7 @@ module Junebug::Controllers
   class Logout
       def get
         @state.user = nil
-        redirect(Junebug.startpage)
+        input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
       end
   end
 end

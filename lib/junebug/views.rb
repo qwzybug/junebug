@@ -191,6 +191,8 @@ module Junebug::Views
 
         label 'Password', :for => 'password'; br
         input :name => 'password', :type => 'password'; br
+        
+        input :name => 'return_to', :type => 'hidden', :value=>@return_to
 
         input :type => 'submit', :name => 'login', :value => 'Login'
       end
@@ -222,7 +224,7 @@ module Junebug::Views
   def _header type, page_title
     div :id=>'hd' do
       span :id=>'userlinks', :style=>'float: right;' do
-        logged_in? ? (text "Welcome, #{@state.user.username} - " ; a('sign out', :href=>R(Logout))) : a('sign in', :href=>R(Login))
+        logged_in? ? (text "Welcome, #{@state.user.username} - " ; a('sign out', :href=>"#{R(Logout)}?return_to=#{@env['REQUEST_URI']}")) : a('sign in', :href=> "#{R(Login)}?return_to=#{@env['REQUEST_URI']}")
       end
       if type == :static
         h1 page_title
