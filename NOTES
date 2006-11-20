@@ -19,8 +19,10 @@ TODO
 * signup with captcha
 * authentication tests
 * attachments
-* dump pages
+* dump pages + users
 * more tests
 * help pages
 * improve diff page
+* quicksave
+* ext lib directory
 

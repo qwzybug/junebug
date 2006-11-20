@@ -1,4 +1,4 @@
-require 'junebug/diff'
+require 'junebug/ext/diff'
 
 module Junebug::Controllers
   

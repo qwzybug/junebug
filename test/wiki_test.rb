@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/../lib/junebug/mosquito"
+require File.dirname(__FILE__) + "/../lib/junebug/ext/mosquito"
 require File.dirname(__FILE__) + "/../lib/junebug"
 
 Junebug.create
