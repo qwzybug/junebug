@@ -29,16 +29,25 @@ module Junebug::Controllers
       render :edit
     end
     
+    # FIXME: no error checking, also no verify quicksave/readonly rights
     def post page_name
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
       if input.submit == 'save'
-        attrs = { :body => input.post_body, :title => input.post_title, :user_id =>@state.user.id }
-        attrs[:readonly] = input.post_readonly if is_admin?
-        if Page.find_or_create_by_title(page_name).update_attributes( attrs )
-          # redirect Show, input.post_title
-          redirect "#{Junebug.config['url']}/#{input.post_title.gsub(/ /,'+')}"
+        if ! input.quicksave
+          attrs = { :body => input.post_body, :title => input.post_title, :user_id =>@state.user.id }
+          attrs[:readonly] = input.post_readonly if is_admin?
+          Page.find_or_create_by_title(page_name).update_attributes(attrs)
+        else
+          attrs = { :body => input.post_body }
+          attrs[:readonly] = input.post_readonly if is_admin?
+          page = Page.find_by_title(page_name)
+          current_version = page.find_version(page.version)
+          current_version.update_attributes(attrs)
+          page.without_revision { page.update_attributes(attrs) }
         end
-      else
+        # redirect Show, input.post_title
+        redirect "#{Junebug.config['url']}/#{input.post_title.gsub(/ /,'+')}"
+      else # cancel
         redirect "#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}"
       end
     end

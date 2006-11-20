@@ -76,9 +76,13 @@ module Junebug::Views
             opts = { :type => 'checkbox', :value=>'1', :name => 'post_readonly' }
             opts[:checked] = 1 if @page.readonly
             input opts
-            text " Readonly"
-            br
+            text " Readonly "
           end
+          if @page.user_id == @state.user.id
+            input :type=>'checkbox', :value=>'1', :name=>'quicksave'
+            text " Quicksave "
+          end
+          br
           input :type => 'submit', :name=>'submit', :value=>'cancel', :class=>'button', :style=>'float: right;'
           input :type => 'submit', :name=>'submit', :value=>'save', :class=>'button', :style=>'float: right;'
         end
