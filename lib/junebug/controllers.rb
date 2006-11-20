@@ -157,7 +157,7 @@ module Junebug::Controllers
         @user = User.create :username=>input.username, :password=>input.password
         if @user.errors.empty?
           @state.user = @user
-          redirect(Junebug.startpage)
+          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(Junebug.config['url'] + input.return_to)
           return
         else
           @notice = @user.errors.full_messages[0]
