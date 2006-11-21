@@ -2,69 +2,61 @@ $:.unshift './lib'
 
 require 'rubygems'
 require 'rake'
-
-require 'rake/gempackagetask'
+require 'rake/clean'
 require 'rake/testtask'
+require 'rake/packagetask'
+require 'rake/gempackagetask'
 require 'rake/rdoctask'
+require 'rake/contrib/rubyforgepublisher'
+require 'fileutils'
+require 'hoe'
+include FileUtils
+require File.join(File.dirname(__FILE__), 'lib', 'junebug', 'version')
 
-require 'junebug'
+AUTHOR = "Tim Myrtle"  # can also be an array of Authors
+EMAIL = "tim.myrtle@gmail.com"
+DESCRIPTION = "Junebug is a minimalist ruby wiki running on Camping."
+GEM_NAME = "junebug" # what ppl will type to install your gem
+RUBYFORGE_PROJECT = "junebug" # The unix name for your project
+HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
+RELEASE_TYPES = %w( gem ) # can use: gem, tar, zip
 
-Gem.manage_gems
 
-gem_spec = Gem::Specification.new do |s|
-  s.name = 'junebug'
-  s.version = Junebug::VERSION
-  s.summary = "Junebug is a minimalist ruby wiki."
-  s.description = "Junebug is a minimalist ruby wiki running on Camping."
-  s.author = "Tim Myrtle"
-  s.email = 'tim.myrtle@gmail.com'
-  s.homepage = 'http://www.junebugwiki.com/'
+NAME = "junebug"
+REV = nil # UNCOMMENT IF REQUIRED: File.read(".svn/entries")[/committed-rev="(d+)"/, 1] rescue nil
+VERS = ENV['VERSION'] || (Junebug::VERSION::STRING + (REV ? ".#{REV}" : ""))
+CLEAN.include ['**/.*.sw?', '*.gem', '.config', '**/*.db', '**/*.log', 'config.yml', 'deploy/dump/*']
+RDOC_OPTS = ['--quiet', '--title', "junebug documentation",
+    "--opname", "index.html",
+    "--line-numbers", 
+    "--main", "README",
+    "--inline-source"]
+
+# Generate all the Rake tasks
+# Run 'rake -T' to see list of generated tasks (from gem root directory)
+hoe = Hoe.new(GEM_NAME, VERS) do |p|
+  p.author = AUTHOR 
+  p.description = DESCRIPTION
+  p.email = EMAIL
+  p.summary = DESCRIPTION
+  p.url = HOMEPATH
+  p.rubyforge_name = RUBYFORGE_PROJECT if RUBYFORGE_PROJECT
+  p.test_globs = ["test/**/*_test.rb"]
+  p.clean_globs = CLEAN  #An array of file patterns to delete on clean.
   
-  s.require_paths = ['lib']
-  s.bindir = 'bin'
-  s.executables = ['junebug']
-  s.files = FileList['README', 'LICENSE', 'CHANGELOG', 'RELEASE_NOTES', 'Rakefile', 'lib/**/*', 'deploy/**/*', 'dump/**/*']
-  s.test_files = FileList['test/**/*']
-
-  s.add_dependency('mongrel', '>=0.3.13.3')
-  s.add_dependency('camping', '>=1.5')
-  s.add_dependency('RedCloth', '>=3.0.4')
-  s.add_dependency('daemons', '>=1.0.3')
-  s.add_dependency('sqlite3-ruby', '>=1.1.0.1')
-  s.add_dependency('activerecord', '>=1.14.4')
+  # == Optional
+  #p.changes        - A description of the release's latest changes.
+  #p.extra_deps     - An array of rubygem dependencies.
+  #p.spec_extras    - A hash of extra values to set in the gemspec.
+  p.extra_deps = [
+      ['mongrel', '>=0.3.13.3'],
+      ['camping', '>=1.5'],
+      ['RedCloth', '>=3.0.4'],
+      ['daemons', '>=1.0.3'],
+      ['sqlite3-ruby', '>=1.1.0.1'],
+      ['activerecord', '>=1.14.4']
+    ]
 end
-
-
-Rake::GemPackageTask.new(gem_spec) do |pkg|
-  pkg.need_zip = false
-  pkg.need_tar = false
-end
-
-
-desc "View tidy html from dev server in editor"
-task :tidy do
-  system("curl http://localhost:3301/#{ENV['PAGE']} | tidy -i -wrap 1000 | #{ENV['VISUAL'] || ENV['EDITOR'] || 'vim' }")
-end
-
-
-desc "Clean up directory"
-task :clean => :clobber_package do
-  rm 'deploy/junebug.db', :force => true
-  rm 'deploy/junebug.log', :force => true
-  Dir['deploy/dump/*'].each { |ext| rm ext }
-  rm 'test/test.log', :force => true
-  rm 'config.yml', :force => true
-end
-
-
-desc 'Test the campground.'
-Rake::TestTask.new(:test) do |t|
-#  t.libs << 'lib'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
-
-
 
 
 

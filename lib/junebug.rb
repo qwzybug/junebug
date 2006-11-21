@@ -6,6 +6,7 @@ require 'camping/session'
 
 Camping.goes :Junebug
 
+require 'junebug/version'
 require 'junebug/helpers'
 require 'junebug/models'
 require 'junebug/views'
@@ -17,8 +18,6 @@ require 'fileutils'
 
 module Junebug
   include Camping::Session
-  
-  VERSION='0.0.17'
 
   def self.create
     Junebug::Models.create_schema :assume => (Junebug::Models::Page.table_exists? ? 1.0 : 0.0)
