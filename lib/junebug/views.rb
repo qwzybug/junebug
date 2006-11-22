@@ -5,10 +5,10 @@ module Junebug::Views
     html {
       head {
         title @page_title ? @page_title : @page.title
-        link :href=>'/static/style/yui/reset.css', :type=>'text/css', :rel=>'stylesheet'
-        link :href=>'/static/style/yui/fonts.css', :type=>'text/css', :rel=>'stylesheet'
-        link :href=>'/static/style/yui/grids.css', :type=>'text/css', :rel=>'stylesheet'
-        link :href=>'/static/style/base.css',      :type=>'text/css', :rel=>'stylesheet'
+        link :href=>'/style/yui/reset.css', :type=>'text/css', :rel=>'stylesheet'
+        link :href=>'/style/yui/fonts.css', :type=>'text/css', :rel=>'stylesheet'
+        link :href=>'/style/yui/grids.css', :type=>'text/css', :rel=>'stylesheet'
+        link :href=>'/style/base.css',      :type=>'text/css', :rel=>'stylesheet'
         link :href=>Junebug.config['feed'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
         
       }
@@ -268,7 +268,7 @@ module Junebug::Views
         a 'JunebugWiki', :href => 'http://www.junebugwiki.com/'
         text " <small>v#{Junebug::VERSION::STRING}</small> "
         a :href => Junebug.config['feed'] do
-          img :src => '/static/images/feed-icon-14x14.png'
+          img :src => '/images/feed-icon-14x14.png'
         end
       end
       yield
