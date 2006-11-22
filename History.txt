@@ -1,3 +1,10 @@
+= 0.0.18 2006-11-21
+
+* Converted to using hoe
+* Quicksave option (don't increment version)
+* Signup redirect bugfix
+* External lib dir (ext)
+
 = 0.0.17 2006-11-19
 
 * Quick bugfix for login redirects behind proxy

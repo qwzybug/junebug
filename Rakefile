@@ -13,17 +13,17 @@ require 'hoe'
 include FileUtils
 require File.join(File.dirname(__FILE__), 'lib', 'junebug', 'version')
 
-AUTHOR = "Tim Myrtle"  # can also be an array of Authors
-EMAIL = "tim.myrtle@gmail.com"
-DESCRIPTION = "Junebug is a minimalist ruby wiki running on Camping."
-GEM_NAME = "junebug" # what ppl will type to install your gem
+AUTHOR        = "Tim Myrtle"  # can also be an array of Authors
+EMAIL         = "tim.myrtle@gmail.com"
+DESCRIPTION   = "Junebug is a minimalist ruby wiki running on Camping."
+GEM_NAME      = "junebug" # what ppl will type to install your gem
 RUBYFORGE_PROJECT = "junebug" # The unix name for your project
-HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
+HOMEPATH      = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
 RELEASE_TYPES = %w( gem ) # can use: gem, tar, zip
 
 
 NAME = "junebug"
-REV = nil # UNCOMMENT IF REQUIRED: File.read(".svn/entries")[/committed-rev="(d+)"/, 1] rescue nil
+REV = nil # File.read(".svn/entries")[/committed-rev="(d+)"/, 1] rescue nil
 VERS = ENV['VERSION'] || (Junebug::VERSION::STRING + (REV ? ".#{REV}" : ""))
 CLEAN.include ['**/.*.sw?', '*.gem', '.config', '**/*.db', '**/*.log', 'config.yml', 'deploy/dump/*']
 RDOC_OPTS = ['--quiet', '--title', "junebug documentation",
@@ -35,13 +35,13 @@ RDOC_OPTS = ['--quiet', '--title', "junebug documentation",
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 hoe = Hoe.new(GEM_NAME, VERS) do |p|
-  p.author = AUTHOR 
+  p.author      = AUTHOR 
   p.description = DESCRIPTION
-  p.email = EMAIL
-  p.summary = DESCRIPTION
-  p.url = HOMEPATH
+  p.email       = EMAIL
+  p.summary     = DESCRIPTION
+  p.url         = HOMEPATH
   p.rubyforge_name = RUBYFORGE_PROJECT if RUBYFORGE_PROJECT
-  p.test_globs = ["test/**/*_test.rb"]
+  p.test_globs  = ["test/**/*_test.rb"]
   p.clean_globs = CLEAN  #An array of file patterns to delete on clean.
   
   # == Optional
