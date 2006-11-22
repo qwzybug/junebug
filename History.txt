@@ -1,3 +1,7 @@
+= 0.0.19 2006-11-22
+
+* Rename gem from junebug to junebug-wiki
+
 = 0.0.18 2006-11-21
 
 * Changed diff output to compare unformatted text

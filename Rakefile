@@ -16,12 +16,12 @@ require File.join(File.dirname(__FILE__), 'lib', 'junebug', 'version')
 AUTHOR            = "Tim Myrtle"  # can also be an array of Authors
 EMAIL             = "tim.myrtle@gmail.com"
 DESCRIPTION       = "Junebug is a minimalist ruby wiki running on Camping."
-GEM_NAME          = "junebug" # what ppl will type to install your gem
+GEM_NAME          = "junebug-wiki" # what ppl will type to install your gem
 RUBYFORGE_PROJECT = "junebug" # The unix name for your project
 HOMEPATH          = "http://www.junebugwiki.com"
 RELEASE_TYPES     = %w( gem ) # can use: gem, tar, zip
 
-NAME = "junebug"
+#NAME = "junebug" # I don't think this is used
 REV  = nil # File.read(".svn/entries")[/committed-rev="(d+)"/, 1] rescue nil
 VERS = ENV['VERSION'] || (Junebug::VERSION::STRING + (REV ? ".#{REV}" : ""))
 CLEAN.include ['**/.*.sw?', '*.gem', '.config', '**/*.db', '**/*.log', 'config.yml', 'deploy/dump/*']
