@@ -282,7 +282,7 @@ module Junebug::Views
     xml.instruct!
     xml.feed "xmlns"=>"http://www.w3.org/2005/Atom" do
 
-      xml.title "Recently Updated Wiki Pages"
+      xml.title Junebug.config['feedtitle'] || "Wiki Updates"
       xml.id Junebug.config['url'] + '/'
       xml.link "rel" => "self", "href" => Junebug.config['feed']
 
@@ -290,16 +290,21 @@ module Junebug::Views
       xml.updated pages.first.updated_at.xmlschema
 
       pages.each do |page|
+        url = Junebug.config['url'] + '/' + page.title
         xml.entry do
-          xml.id Junebug.config['url'] + '/' + page.title
+          xml.id url
           xml.title page.title
-          xml.author { xml.name page.user.username }
           xml.updated page.updated_at.xmlschema
-          xml.link "rel" => "alternate", "href" => Junebug.config['url'] + '/' + page.title
-          xml.summary "#{page.title}"
-          xml.content 'type' => 'html' do 
-            xml.text! page.body.gsub("\n", '<br/>').gsub("\r", '') 
+          
+          xml.author { xml.name page.user.username }
+          xml.link "rel" => "alternate", "href" => url
+          xml.summary :type=>'html' do
+            #xml.text! CGI::escapeHTML( %|<a href="#{url}">#{page.title}</a> updated by #{page.user.username} (<a href="#{url}/#{page.version-1}/#{page.version}/diff">diff</a>)| )+"\n"
+            xml.text! %|<a href="#{url}">#{page.title}</a> updated by #{page.user.username} (<a href="#{url}/#{page.version-1}/#{page.version}/diff">diff</a>)| +"\n"
           end
+          # xml.content do 
+          #   xml.text! CGI::escapeHTML(page.body)+"\n"
+          # end
         end
       end   
     end

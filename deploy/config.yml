@@ -9,6 +9,7 @@ port: 3301
 sitepath: /
 
 # configuring rss
+feedtitle: 'Wiki Updates'
 url: http://localhost:3301
 feed: http://localhost:3301/all/feed
 
