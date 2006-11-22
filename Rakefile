@@ -27,10 +27,7 @@ VERS = ENV['VERSION'] || (Junebug::VERSION::STRING + (REV ? ".#{REV}" : ""))
 CLEAN.include ['**/.*.sw?', '*.gem', '.config', '**/*.db', '**/*.log', 'config.yml', 'deploy/dump/*']
 TEST = ["test/**/*_test.rb"]
 RDOC_OPTS = ['--quiet', '--title', "junebug documentation",
-    "--opname", "index.html",
-    "--line-numbers", 
-    "--main", "README",
-    "--inline-source"]
+    "--opname", "index.html", "--line-numbers", "--main", "README", "--inline-source"]
 
 # Generate all the Rake tasks
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
@@ -50,10 +47,10 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
   #p.changes        - A description of the release's latest changes.
   #p.spec_extras    - A hash of extra values to set in the gemspec.
   p.extra_deps = [
-      ['mongrel', '>=0.3.13.3'],
-      ['camping', '>=1.5'],
-      ['RedCloth', '>=3.0.4'],
-      ['daemons', '>=1.0.3'],
+      ['mongrel',      '>=0.3.13.3'],
+      ['camping',      '>=1.5'],
+      ['RedCloth',     '>=3.0.4'],
+      ['daemons',      '>=1.0.3'],
       ['sqlite3-ruby', '>=1.1.0.1'],
       ['activerecord', '>=1.14.4']
     ]
