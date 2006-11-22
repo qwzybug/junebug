@@ -1,3 +1,14 @@
+= 0.0.19 2006-11-22
+
+The name of the gem has changed to junebug-wiki.  This means that to update junebug, you will need to:
+
+gem uninstall junebug
+gem install junebug-wiki
+
+Also, an additional configuration parameter was added to config.yml.  Existing wikis should add the parameter:
+
+feedtitle: 'Wiki Updates'
+
 = 0.0.15 2006-11-17
 
 The wikiword syntax changed in this release from just straight WikiLink to [[WikiLink]].  Just using camelcase was having trouble coexisting with textile, so I opted instead for the instiki convention which is less problematic.
