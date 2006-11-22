@@ -112,8 +112,10 @@ module Junebug::Controllers
       @v1 = @page.find_version(v1)
       @v2 = @page.find_version(v2)
       
-      @v1_markup = ( @v1.body ? _markup( @v1.body ) : '' )
-      @v2_markup = ( @v2.body ? _markup( @v2.body ) : '' )
+      #@v1_markup = ( @v1.body ? _markup( @v1.body ) : '' )
+      #@v2_markup = ( @v2.body ? _markup( @v2.body ) : '' )
+      @v1_markup = @v1.body || ''
+      @v2_markup = @v2.body || ''
       
       @difftext = diff( @v1_markup , @v2_markup)
       

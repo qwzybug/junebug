@@ -178,8 +178,8 @@ module Junebug::Views
       a "back", :href => R(Show, @page.title)
       br
       br
-      div.diff {
-        text @difftext
+      pre.diff {
+          text @difftext
       }
     }
     _footer { '' }
