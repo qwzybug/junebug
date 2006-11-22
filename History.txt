@@ -1,6 +1,6 @@
 = 0.0.18 2006-11-21
 
-* Changed diff output to compare unformmatted text
+* Changed diff output to compare unformatted text
 * Converted to using hoe
 * Quicksave option (doesn't increment version)
 * Signup redirect bugfix
