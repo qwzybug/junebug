@@ -1,4 +1,4 @@
-v0.0.15
+= 0.0.15 2006-11-17
 
 The wikiword syntax changed in this release from just straight WikiLink to [[WikiLink]].  Just using camelcase was having trouble coexisting with textile, so I opted instead for the instiki convention which is less problematic.
 

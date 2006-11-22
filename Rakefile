@@ -58,6 +58,7 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
     ]
 end
 
+#rake test RUBY_FLAGS=''
 
 
 

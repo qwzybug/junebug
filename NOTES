@@ -15,6 +15,7 @@ sqlite3 junebug.db
 
 TODO
 
+* probably remove yui grid
 * should probably separate signup/login
 * signup with captcha
 * authentication tests
@@ -24,5 +25,4 @@ TODO
 * help pages
 * improve diff page
 * quicksave
-* ext lib directory
 

@@ -1,7 +1,8 @@
-Junebug Wiki
-  http://www.junebug.com
-  http://rubyforge.org/projects/junebug/
-  tim.myrtle@gmail.com
+= JUNEBUG WIKI
+
+* http://www.junebugwiki.com
+* http://rubyforge.org/projects/junebug/
+* tim.myrtle@gmail.com
 
 
 == DESCRIPTION:
