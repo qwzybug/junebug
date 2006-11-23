@@ -11,7 +11,7 @@ gem install junebug-wiki
 
 feedtitle: 'Wiki Updates'
 
-# The 'static' directory has been renamed to 'public'.  You will need to rename this directory manually.
+# The 'static' directory has been renamed to 'public'.  You will need to rename this directory manually, or just run 'rake update:deploydir'.
 
 Sorry for all the instability -- but I figure it is better now when the userbase is 3 than a month from now when it's 30 (ha!)
 

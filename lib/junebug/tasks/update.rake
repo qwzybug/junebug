@@ -1,7 +1,12 @@
 require 'junebug/config'
 
 namespace :update do
-  
+
+  desc "Update deploy directory"
+  task :deploydir do
+    mv 'static', 'public', :force => true
+  end
+
   desc "Update stylesheets"
   task :stylesheets do
     junebug_root = Junebug::Config.rootdir
@@ -15,7 +20,7 @@ namespace :update do
   end
 
   desc "Update everything"
-  task :everything => [:stylesheets, :rakefile] do
+  task :everything => [:deploydir, :stylesheets, :rakefile] do
 
   end
 
