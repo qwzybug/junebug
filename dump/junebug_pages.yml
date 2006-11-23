@@ -1,5 +1,5 @@
 --- 
-- updated_at: 2006-11-07 18:24:43 -08:00
+- updated_at: 2006-11-23 09:39:25 -08:00
   title: JunebugWiki
   readonly: true
   body: |
@@ -34,18 +34,57 @@
   version: 1
   user_id: 1
   created_at: 2006-10-29 16:19:34 -08:00
-- updated_at: 2006-11-07 18:24:43 -08:00
+- updated_at: 2006-11-23 12:08:56 -08:00
   title: JunebugHelp
   readonly: 
-  body: This is a work in progress
+  body: |
+    h1. Junebug Help
+    
+    h2. Wiki Words
+    
+    Junebug will create a wiki link for any text enclosed in double brackets:
+    
+    <span style="background: #f4f4f4; padding: 2px; font-family: monospace;"><span>[[</span>JunebugWiki]]</span> creates a link to [[JunebugWiki]]
+    
+    You can change the text of the link as follows:
+    
+    <span style="background: #f4f4f4; padding: 2px; font-family: monospace;"><span>[[</span>JunebugWiki|Junebug Wiki Home]]</span> creates a link to [[JunebugWiki| Junebug Wiki Home]]
+    
+    h2. Text Formatting (Textile)
+    
+    This is a work in progress...
+    
+    |_.Structural Formatting |_.You Type |_.You Get |
+    | *Paragraphs:*<br>Blank lines create new paragraphs | <pre class="clean">paragraph-1
+    
+    paragraph-2</pre> | paragraph-1<br><br>paragraph-2 |
+    | *Headers:* | <pre class="clean">
+    h1. Header 1
+    h2. Header 2
+    h3. Header 3
+    </pre> | <h1>Header 1</h1><h2>Header 2</h2><h3>Header 3</h3>|
+    |_.Text Formatting |_.You Type |_.You Get |
+    | *Bold Text (strength):*  | <code class="clean">*Bold*</code> | *Bold* |
+    | *Italic Text (emphasis):* | <code class="clean">_Italic_</code> | _Italic_ |
+    | *Fixed Font (code):* | <code class="clean">@Fixed Font@</code> | @Fixed Font@ |
+    | *Code Block (pre/code):*<br>Text indented with a single space | <pre class="clean">_Code Block
+    </pre> | <pre><code>Code Block</code></pre> |
+    | *Preformatted Block:*<br>Text enclosed by &lt;pre&gt; tags | <pre class="clean">
+    <pre>
+    Preformatted Block
+    </pre>
+    </pre> | <pre>Preformatted Block</pre> |
+
   id: 2
   version: 1
   user_id: 1
   created_at: 2006-11-01 00:10:07 -08:00
-- updated_at: 2006-11-07 18:24:43 -08:00
-  title: FormatTest
+- updated_at: 2006-11-23 09:42:05 -08:00
+  title: TextileTest
   readonly: 
   body: |-
+    h1. Textile Syntax Test
+    
     See "this page":http://hobix.com/textile/ for the full range of formatting options
     
     h2. Headers
