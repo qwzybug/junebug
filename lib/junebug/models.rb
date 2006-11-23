@@ -26,7 +26,8 @@ module Junebug::Models
 
   class Page < Base
     belongs_to :user
-    PAGE_LINK = /\[\[([^\]|]*)[|]?([^\]]*)\]\]/
+    #PAGE_LINK = /\[\[([^\]|]*)[|]?([^\]]*)\]\]/
+    PAGE_LINK = /\[\[([\w ]+)[|]?([^\]]*)\]\]/
     #before_save { |r| r.title = r.title.underscore }
     #PAGE_LINK = /([A-Z][a-z]+[A-Z]\w+)/
     validates_uniqueness_of :title
