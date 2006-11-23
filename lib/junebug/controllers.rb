@@ -138,7 +138,7 @@ module Junebug::Controllers
     def get(path)
       @headers['Content-Type'] = MIME_TYPES[path[/\.\w+$/, 0]] || "text/plain"
       unless path =~ /\.\./ # sample test to prevent directory traversal attacks
-        @headers['X-Sendfile'] = "#{PATH}/static#{path}"
+        @headers['X-Sendfile'] = "#{PATH}/public#{path}"
       else
         "404 - Invalid path"
       end

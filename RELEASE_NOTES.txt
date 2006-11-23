@@ -1,13 +1,20 @@
 = 0.0.19 2006-11-22
 
-The name of the gem has changed to junebug-wiki.  This means that to update junebug, you will need to:
+Existing junebug installations will need to make the following changes:
+
+# The name of the gem has changed to junebug-wiki.  This means that to update junebug, you will need to:
 
 gem uninstall junebug
 gem install junebug-wiki
 
-Also, an additional configuration parameter was added to config.yml.  Existing wikis should add the parameter:
+# An additional configuration parameter was added to config.yml.  To update existing wikis, add the parameter:
 
 feedtitle: 'Wiki Updates'
+
+# The 'static' directory has been renamed to 'public'.  You will need to rename this directory manually.
+
+Sorry for all the instability -- but I figure it is better now when the userbase is 3 than a month from now when it's 30 (ha!)
+
 
 = 0.0.15 2006-11-17
 
