@@ -21,7 +21,7 @@ END
       end
       
       if (args[0] == '-v') || (args[0] == '--version')
-        puts "Junebug v#{Junebug::VERSION}"
+        puts "Junebug v#{Junebug::VERSION::STRING}"
         return
       end
       
