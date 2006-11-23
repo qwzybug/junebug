@@ -44,7 +44,7 @@ Welcome to Junebug!
 To start your new wiki, do the following:
 
 > cd #{app}
-> ./wiki run
+> ruby wiki run
 
 Open your browser to http://#{Junebug.config['host']}:#{Junebug.config['port']}#{Junebug.config['sitepath']}
 
