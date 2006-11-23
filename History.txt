@@ -1,5 +1,7 @@
 = 0.0.19 2006-11-22
 
+* 'Recent Pages' page improvements
+* Atom feed improvements
 * Rename gem from junebug to junebug-wiki
 * Renamed 'static' dir to 'public'
 * Performance improvements

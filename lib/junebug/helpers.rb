@@ -25,6 +25,11 @@ module Junebug::Helpers
     end
   end
 
+  def diff_link(page, version=nil)
+    version = page if version.nil?
+    a 'diff', :href => R(Junebug::Controllers::Diff,page.title,version.version-1,version.version)
+  end
+
   def auto_link_urls(text)
     extra_options = ""
     text.gsub(/(<\w+.*?>|[^=!:'"\/]|^)((?:http[s]?:\/\/)|(?:www\.))([^\s<]+\/?)([[:punct:]]|\s|<|$)/) do
@@ -38,5 +43,6 @@ module Junebug::Helpers
       end
     end
   end
+  
 
 end

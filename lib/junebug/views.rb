@@ -30,11 +30,7 @@ module Junebug::Views
     }
     _footer {
       text "Last edited by <b>#{@version.user.username}</b> on #{@page.updated_at.strftime('%B %d, %Y %I:%M %p')}"
-      if @version.version > 1
-        text " ("
-        a 'diff', :href => R(Diff,@page.title,@version.version-1,@version.version)
-        text ")"
-      end
+      text " (#{diff_link(@page, @version)}) " if @version.version > 1
       br
       text '<b>[readonly]</b> ' if @page.readonly
       span.actions {
@@ -101,11 +97,7 @@ module Junebug::Views
         @versions.each_with_index do |page,i|
           li {
             a "version #{page.version}", :href => R(Show, @page.title, page.version)
-            if page.version > 1
-              text ' ('
-              a 'diff', :href => R(Diff, @page.title, page.version-1, page.version)
-              text ')'
-            end
+            text " (#{diff_link(@page, page)}) " if page.version > 1
             text' - created '
             text last_updated(page)
             text ' ago by '
@@ -155,6 +147,7 @@ module Junebug::Views
               a page.title, :href => R(Show, page.title)
               text ' ('
               a 'versions', :href => R(Versions, page.title)
+              text ",#{diff_link(page)}" if page.version > 1
               text ') '
               span page.updated_at.strftime('%I:%M %p')
             }
