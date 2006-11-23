@@ -10,7 +10,7 @@ namespace :update do
   desc "Update stylesheets"
   task :stylesheets do
     junebug_root = Junebug::Config.rootdir
-    cp_r File.join(junebug_root, 'deploy', 'static'), '.'
+    cp_r File.join(junebug_root, 'deploy', 'public'), '.'
   end
 
   desc "Update rakefile"

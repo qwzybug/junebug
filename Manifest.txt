@@ -7,11 +7,11 @@ bin/junebug
 deploy/Rakefile
 deploy/config.yml
 deploy/console
-deploy/static/images/feed-icon-14x14.png
-deploy/static/style/base.css
-deploy/static/style/yui/fonts.css
-deploy/static/style/yui/grids.css
-deploy/static/style/yui/reset.css
+deploy/public/images/feed-icon-14x14.png
+deploy/public/style/base.css
+deploy/public/style/yui/fonts.css
+deploy/public/style/yui/grids.css
+deploy/public/style/yui/reset.css
 deploy/wiki
 dump/junebug_pages.yml
 lib/junebug.rb
