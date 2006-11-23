@@ -212,11 +212,12 @@ module Junebug::Views
 
   def _markup txt
     return '' if txt.blank?
+    titles = Junebug::Models::Page.find(:all, :select => 'title').collect { |p| p.title }
     txt.gsub!(Junebug::Models::Page::PAGE_LINK) do
       page = title = $1
       title = $2 unless $2.empty?
       #page = page.gsub /\W/, '_'
-      if Junebug::Models::Page.find(:all, :select => 'title').collect { |p| p.title }.include?(page)
+      if titles.include?(page)
         %Q{<a href="#{self/R(Show, page)}">#{title}</a>}
       else
         %Q{<span>#{title}<a href="#{self/R(Edit, page, 1)}">?</a></span>}
