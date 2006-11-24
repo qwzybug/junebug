@@ -1,4 +1,4 @@
-require 'junebug/config'
+require 'junebug'
 
 namespace :update do
 
@@ -19,8 +19,28 @@ namespace :update do
     cp File.join(junebug_root, 'deploy', 'Rakefile'), '.'
   end
 
+  desc "Update help pages"
+  task :help do
+    Junebug.connect
+    pages_file = File.dirname(__FILE__) + "/../../../dump/junebug_pages.yml"
+    YAML.load_file(pages_file).each do |page_data|
+      # For consistency...
+      page_data.delete('id')
+      page_data.delete('version')
+      page_data.delete('updated_at')
+      page_data.delete('created_at')
+      page_data['user_id'] = 1
+      page = Junebug::Models::Page.find_by_title(page_data['title'])
+      if page
+        page.update_attributes(page_data)
+      else
+        Junebug::Models::Page.create(page_data)
+      end
+    end
+  end
+
   desc "Update everything"
-  task :everything => [:deploydir, :stylesheets, :rakefile] do
+  task :everything => [:deploydir, :stylesheets, :rakefile, :help] do
 
   end
 
