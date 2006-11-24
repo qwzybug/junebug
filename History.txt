@@ -1,3 +1,9 @@
+= 0.0.20 2006-11-23
+
+* Rake task to update local documentation (rake update:help)
+* Documentation updates
+* Version bugfix. Thanks DJ
+
 = 0.0.19 2006-11-22
 
 * *BE SURE TO READ THE RELEASE NOTES*
