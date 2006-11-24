@@ -86,7 +86,6 @@ module Junebug::Models
       
       # Install some default pages
       pages_file = File.dirname(__FILE__) + "/../../dump/junebug_pages.yml"
-      puts pages_file
       YAML.load_file(pages_file).each {|page_data|Page.create(page_data) } if File.exist?(pages_file)
     end
     def self.down
