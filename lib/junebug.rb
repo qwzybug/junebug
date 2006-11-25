@@ -51,5 +51,15 @@ if __FILE__ == $0 || ENV['DAEMONS_ARGV']
 
   puts "** Junebug is running at http://#{Junebug.config['host']}:#{Junebug.config['port']}#{Junebug.config['sitepath']}"
 
-  server.run.join
+  thread = server.run
+
+  stop_method = lambda do
+    puts "** Junebug is stopping"
+    thread.kill
+  end
+
+  trap "INT", &stop_method
+  trap "TERM", &stop_method
+  
+  thread.join
 end
