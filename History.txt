@@ -1,3 +1,7 @@
+= 0.0.21 2006-11-25
+
+* INT and TERM signals handling -- Thanks zimbatm!
+
 = 0.0.20 2006-11-23
 
 * Rake task to update local documentation (rake update:help)
