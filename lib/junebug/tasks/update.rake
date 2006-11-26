@@ -32,7 +32,7 @@ namespace :update do
       page_data['user_id'] = 1
       page = Junebug::Models::Page.find_by_title(page_data['title'])
       if page
-        page.update_attributes(page_data)
+        page.update_attributes(page_data) unless page.body == page_data['body']
       else
         Junebug::Models::Page.create(page_data)
       end
