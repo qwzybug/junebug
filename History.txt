@@ -1,6 +1,8 @@
-= 0.0.21 2006-11-25
+= 0.0.21 2006-11-26
 
+* *EXISTING USERS PLEASE READ THE RELEASE NOTES*
 * INT and TERM signals handling -- Thanks zimbatm!
+* Support for databases other than sqlite3 -- Thanks Robert Gogolok
 
 = 0.0.20 2006-11-23
 

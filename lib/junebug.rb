@@ -25,7 +25,7 @@ module Junebug
   end
   
   def self.connect
-    Junebug::Models::Base.establish_connection :adapter => 'sqlite3', :database => 'junebug.db'
+    Junebug::Models::Base.establish_connection(Junebug.config['dbconnection'])
     Junebug::Models::Base.logger = Logger.new('junebug.log')
     Junebug::Models::Base.threaded_connections=false
   end

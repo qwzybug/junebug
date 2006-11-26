@@ -1,3 +1,21 @@
+= 0.0.21 2006-11-26
+
+The database configuration in config.yml has been changed to allow easy support for databases other than sqlite3. Existing junebug installations will need to make the following changes:
+
+In config.yml, change this:
+
+adapter: sqlite3
+database: junebug.db
+
+To this:
+
+dbconnection:
+  adapter: sqlite3
+  database: junebug.db
+
+And be sure to use spaces to indent!
+
+
 = 0.0.19 2006-11-22
 
 Existing junebug installations will need to make the following changes:

@@ -99,7 +99,7 @@ module Junebug::Controllers
   class Recent < R '/all/recent'
     def get
       @page_title = "Recent Changes"
-      @pages = Page.find(:all, :order => 'updated_at DESC', :conditions => "julianday('now')-julianday(updated_at) < 30.0")
+      @pages = Page.find(:all, :order => 'updated_at DESC', :conditions => "updated_at > '#{30.days.ago.strftime("%Y-%m-%d %H:%M:%S")}'")
       render :recent
     end
   end
