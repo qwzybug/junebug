@@ -1,3 +1,7 @@
+= 0.0.22 2006-11-27
+
+* Data dump improvements
+
 = 0.0.21 2006-11-26
 
 * *EXISTING USERS PLEASE READ THE RELEASE NOTES*
