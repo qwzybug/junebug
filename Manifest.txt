@@ -10,7 +10,6 @@ deploy/console
 deploy/public/images/feed-icon-14x14.png
 deploy/public/style/base.css
 deploy/public/style/yui/fonts.css
-deploy/public/style/yui/grids.css
 deploy/public/style/yui/reset.css
 deploy/wiki
 dump/junebug_pages.yml

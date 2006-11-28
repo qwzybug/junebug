@@ -64,7 +64,7 @@ module Junebug::Views
             br
             input :value => @page.title, :name => 'post_title', :size => 30, 
                   :type => 'text'
-            small " word characters [0-9A-Za-z_] and spaces only"
+            small " word characters [0-9A-Za-z] and spaces only"
           }
           p {
             label 'Page Content'

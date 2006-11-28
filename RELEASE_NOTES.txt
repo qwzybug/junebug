@@ -1,3 +1,15 @@
+= 0.0.22 2006-11-28
+
+The wikiword syntax has changed slightly.  Starting in this version, wikiwords can not contain underscores. Furthermore, in page urls, spaces will now be replaced by underscores.  Example:
+
+Invalid wikiword link syntax: [[Test_page]]
+
+Valid wikiword link syntax:  [[Test page]]
+Corresponding page url: http://www.wiki.com/Test_page
+
+Also, you will notice that the page title is now presented in the page body rather than the header.  I was finding that the previous location in the header usually led me to rewrite the title in the body for clarity.
+
+
 = 0.0.21 2006-11-26
 
 The database configuration in config.yml has been changed to allow easy support for databases other than sqlite3. Existing junebug installations will need to make the following changes:

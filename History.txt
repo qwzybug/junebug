@@ -1,6 +1,10 @@
-= 0.0.22 2006-11-27
+= 0.0.22 2006-11-28
 
+* *EXISTING USERS PLEASE READ THE RELEASE NOTES*
 * Data dump improvements
+* Removed yahoo grids (weren't using them), page structure simplification
+* Changed page naming convention (underscores in url, spaces in title and db) 
+* Changed header format to help avoid title duplication in text
 
 = 0.0.21 2006-11-26
 
