@@ -27,7 +27,7 @@ module Junebug::Helpers
 
   def diff_link(page, version=nil)
     version = page if version.nil?
-    a 'diff', :href => R(Junebug::Controllers::Diff,page.title,version.version-1,version.version)
+    a 'diff', :href => R(Junebug::Controllers::Diff,page.title_url,version.version-1,version.version)
   end
 
   def auto_link_urls(text)

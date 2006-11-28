@@ -1,33 +1,34 @@
 require 'redcloth'
 
 module Junebug::Views
+  
   def layout
     html {
       head {
         title @page_title ? @page_title : @page.title
         link :href=>'/style/yui/reset.css', :type=>'text/css', :rel=>'stylesheet'
         link :href=>'/style/yui/fonts.css', :type=>'text/css', :rel=>'stylesheet'
-        link :href=>'/style/yui/grids.css', :type=>'text/css', :rel=>'stylesheet'
         link :href=>'/style/base.css',      :type=>'text/css', :rel=>'stylesheet'
         link :href=>Junebug.config['feed'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
-        
       }
       body {
-        div :id=>'doc', :class=>'yui-t7' do
+        div :id=>'doc' do
           self << yield
         end
       }
     }
   end
 
+
   def show
-    _header (@version.version == @page.version ? :backlinks : :show), @page.title
-    _body {
-      _button 'edit', R(Edit, @page.title, @version.version), {:style=>'float: right; margin: 0 0 5px 5px;'} if logged_in? && (@version.version == @page.version && (! @page.readonly || is_admin?))
+    _header (@version.version == @page.version ? :backlinks : :show)
+    _body do
+      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 0 0 5px 5px;'} if logged_in? && (@version.version == @page.version && (! @page.readonly || is_admin?))
+      h1 @page.title
       _markup @version.body
-      _button 'edit', R(Edit, @page.title, @version.version), {:style=>'float: right; margin: 5px 0 0 5px;'} if logged_in? && (@version.version == @page.version && (! @page.readonly || is_admin?)) && (@version.body && @version.body.size > 200)
+      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 5px 0 0 5px;'} if logged_in? && (@version.version == @page.version && (! @page.readonly || is_admin?)) && (@version.body && @version.body.size > 200)
       br :clear=>'all'
-    }
+    end
     _footer {
       text "Last edited by <b>#{@version.user.username}</b> on #{@page.updated_at.strftime('%B %d, %Y %I:%M %p')}"
       text " (#{diff_link(@page, @version)}) " if @version.version > 1
@@ -37,25 +38,27 @@ module Junebug::Views
         text "Version #{@version.version} "
         text "(current) " if @version.version == @page.version
         #text 'Other versions: '
-        a '«older', :href => R(Show, @page.title, @version.version-1) unless @version.version == 1
-        a 'newer»', :href => R(Show, @page.title, @version.version+1) unless @version.version == @page.version
-        a 'current', :href => R(Show, @page.title) unless @version.version == @page.version
-        a 'versions', :href => R(Versions, @page.title)
+        a '«older', :href => R(Show, @page.title_url, @version.version-1) unless @version.version == 1
+        a 'newer»', :href => R(Show, @page.title_url, @version.version+1) unless @version.version == @page.version
+        a 'current', :href => R(Show, @page.title_url) unless @version.version == @page.version
+        a 'versions', :href => R(Versions, @page.title_url)
       }
     }
     if is_admin?
       div.admin {
-        _button 'delete', R(Delete, @page.title), {:onclick=>"return confirm('Sure you want to delete?')"} if @version.version == @page.version
-        _button 'revert to', R(Revert, @page.title, @version.version), {:onclick=>"return confirm('Sure you want to revert?')"} if @version.version != @page.version
+        _button 'delete', R(Delete, @page.title_url), {:onclick=>"return confirm('Sure you want to delete?')"} if @version.version == @page.version
+        _button 'revert to', R(Revert, @page.title_url, @version.version), {:onclick=>"return confirm('Sure you want to revert?')"} if @version.version != @page.version
       }
     end
   end
 
+
   def edit
-    _header :show, @page.title
-    _body {
+    _header :show
+    _body do
+      h1 @page_title
       div.formbox {
-        form :method => 'post', :action => R(Edit, @page.title) do
+        form :method => 'post', :action => R(Edit, @page.title_url) do
           p { 
             label 'Page Title'
             br
@@ -85,18 +88,19 @@ module Junebug::Views
         a 'syntax help', :href => 'http://hobix.com/textile/', :target=>'_blank'
         br :clear=>'all'
       }
-    }
+    end
     _footer { '' }
   end
 
+
   def versions
-    _header :show, @page.title
-    _body {
+    _header :show
+    _body do
       h1 @page_title
       ul {
         @versions.each_with_index do |page,i|
           li {
-            a "version #{page.version}", :href => R(Show, @page.title, page.version)
+            a "version #{page.version}", :href => R(Show, @page.title_url, page.version)
             text " (#{diff_link(@page, page)}) " if page.version > 1
             text' - created '
             text last_updated(page)
@@ -106,36 +110,38 @@ module Junebug::Views
           }
         end
       }
-    }
+    end
     _footer { '' }
   end
 
+
   def backlinks
-    _header :show, @page.title
-    _body {
+    _header :show
+    _body do
       h1 "Backlinks to #{@page.title}"
       ul {
         @pages.each { |p| li{ a p.title, :href => R(Show, p.title) } }
       }
-    }
+    end
     _footer { '' }
   end
 
+
   def list
-    _header :static, @page_title
-    _body {
-      h1 "All Wiki Pages"
+    _header :static
+    _body do
+      h1 "All wiki pages"
       ul {
-        @pages.each { |p| li{ a p.title, :href => R(Show, p.title) } }
+        @pages.each { |p| li{ a p.title, :href => R(Show, p.title_url) } }
       }
-    }
+    end
     _footer { '' }
   end
 
 
   def recent
-    _header :static, @page_title
-    _body {
+    _header :static
+    _body do
       h1 "Updates in the last 30 days"
       page = @pages.shift 
       while page
@@ -144,9 +150,9 @@ module Junebug::Views
         ul {
           loop do
             li {
-              a page.title, :href => R(Show, page.title)
+              a page.title, :href => R(Show, page.title_url)
               text ' ('
-              a 'versions', :href => R(Versions, page.title)
+              a 'versions', :href => R(Versions, page.title_url)
               text ",#{diff_link(page)}" if page.version > 1
               text ') '
               span page.updated_at.strftime('%I:%M %p')
@@ -156,25 +162,25 @@ module Junebug::Views
           end
         }
       end
-    }
+    end
     _footer { '' }
   end
   
   def diff
-    _header :show, @page.title
-    _body {
+    _header :show
+    _body do
       text 'Comparing '
       span "version #{@v2.version}", :style=>"background-color: #cfc; padding: 1px 4px;"
       text ' and '
       span "version #{@v1.version}", :style=>"background-color: #ddd; padding: 1px 4px;"
       text ' '
-      a "back", :href => R(Show, @page.title)
+      a "back", :href => R(Show, @page.title_url)
       br
       br
       pre.diff {
-          text @difftext
+        text @difftext
       }
-    }
+    end
     _footer { '' }
   end
   
@@ -209,48 +215,53 @@ module Junebug::Views
     txt.gsub!(Junebug::Models::Page::PAGE_LINK) do
       page = title = $1
       title = $2 unless $2.empty?
-      #page = page.gsub /\W/, '_'
+      page_url = page.gsub(/ /, '_')
       if titles.include?(page)
-        %Q{<a href="#{self/R(Show, page)}">#{title}</a>}
+        %Q{<a href="#{self/R(Show, page_url)}">#{title}</a>}
       else
-        %Q{<span>#{title}<a href="#{self/R(Edit, page, 1)}">?</a></span>}
+        %Q{<span>#{title}<a href="#{self/R(Edit, page_url, 1)}">?</a></span>}
       end
     end
     text RedCloth.new(auto_link_urls(txt), [ ]).to_html
   end
 
-  def _header type, page_title
+  def _header type
     div :id=>'hd' do
-      span :id=>'userlinks', :style=>'float: right;' do
-        logged_in? ? (text "Welcome, #{@state.user.username} - " ; a('sign out', :href=>"#{R(Logout)}?return_to=#{@env['REQUEST_URI']}")) : a('sign in', :href=> "#{R(Login)}?return_to=#{@env['REQUEST_URI']}")
+      
+      span :id=>'userlinks' do
+        if logged_in?
+          text "Welcome, #{@state.user.username} - "
+          a 'sign out', :href=>"#{R(Logout)}?return_to=#{@env['REQUEST_URI']}"
+        else
+          a 'sign in', :href=> "#{R(Login)}?return_to=#{@env['REQUEST_URI']}"
+        end
       end
-      if type == :static
-        h1 page_title
-      elsif type == :backlinks
-        h1 { a page_title, :href => R(Backlinks, page_title) }
-      else
-        h1 { a page_title, :href => R(Show, page_title) }
-      end
-      span {
+    
+      span :id=>'navlinks' do
         a 'Home',  :href => R(Show, Junebug.config['startpage'])
         text ' | '
         a 'RecentChanges', :href => R(Recent)
         text ' | '
         a 'All Pages', :href => R(List)
         text ' | '
-        a 'Help', :href => R(Show, "JunebugHelp") 
-      }
+        a 'Help', :href => R(Show, "Junebug_help") 
+      end
+            
+      # if type == :static
+      #   h1 page_title
+      # elsif type == :backlinks
+      #   h1 { a page_title, :href => R(Backlinks, page_title) }
+      # else
+      #   h1 { a page_title, :href => R(Show, page_title) }
+      # end
+      
     end
   end
 
   def _body
     div :id=>'bd' do
-      div :id=>'yui-main' do
-        div :class=>'yui-b' do
-          div.content do
-            yield
-          end
-        end
+      div.content do
+        yield
       end
     end
   end

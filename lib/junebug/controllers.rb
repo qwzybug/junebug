@@ -9,72 +9,75 @@ module Junebug::Controllers
     end
   end
 
-  class Show < R '/([\w ]+)', '/([\w ]+)/(\d+)'
+  class Show < R '/([0-9A-Za-z_]+)', '/([0-9A-Za-z_]+)/(\d+)'
     def get page_name, version = nil
-      @page_title = page_name
       #redirect(Edit, page_name, 1) and return unless @page = Page.find_by_title(page_name)
-      redirect("#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}/1/edit") and return unless @page = Page.find_by_title(page_name)
+      redirect("#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}/1/edit") and return unless @page = Page.find_by_title(page_name.gsub(/_/,' '))
+      @page_title = @page.title
       @version = (version.nil? or version == @page.version.to_s) ? @page : @page.versions.find_by_version(version)
       render :show
     end
   end
 
-  class Edit < R '/([\w ]+)/edit', '/([\w ]+)/(\d+)/edit' 
+  class Edit < R '/([0-9A-Za-z_]+)/edit', '/([0-9A-Za-z_]+)/(\d+)/edit' 
     def get page_name, version = nil
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
-      @page_title = "Edit #{page_name}"
-      @page = Page.find(:first, :conditions=>['title = ?', page_name])
-      @page = Page.create(:title => page_name, :user_id=>@state.user.id) unless @page
+      page_name_spc = page_name.gsub(/_/,' ')
+      @page = Page.find(:first, :conditions=>['title = ?', page_name_spc])
+      @page = Page.create(:title => page_name_spc, :user_id=>@state.user.id) unless @page
       @page = @page.versions.find_by_version(version) unless version.nil? or version == @page.version.to_s
+      @page_title = "Editing: #{page_name_spc}"
       render :edit
     end
     
     # FIXME: no error checking, also no verify quicksave/readonly rights
     def post page_name
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
+      page_name_spc = page_name.gsub(/_/,' ')
       if input.submit == 'save'
         if ! input.quicksave
           attrs = { :body => input.post_body, :title => input.post_title, :user_id =>@state.user.id }
           attrs[:readonly] = input.post_readonly if is_admin?
-          Page.find_or_create_by_title(page_name).update_attributes(attrs)
+          Page.find_or_create_by_title(page_name_spc).update_attributes(attrs)
         else
           attrs = { :body => input.post_body }
           attrs[:readonly] = input.post_readonly if is_admin?
-          page = Page.find_by_title(page_name)
+          page = Page.find_by_title(page_name_spc)
           current_version = page.find_version(page.version)
           current_version.update_attributes(attrs)
           page.without_revision { page.update_attributes(attrs) }
         end
         # redirect Show, input.post_title
-        redirect "#{Junebug.config['url']}/#{input.post_title.gsub(/ /,'+')}"
+        redirect "#{Junebug.config['url']}/#{input.post_title.gsub(/ /,'_')}"
       else # cancel
-        redirect "#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}"
+        redirect "#{Junebug.config['url']}/#{page_name}"
       end
     end
   end
   
-  class Delete < R '/([\w ]+)/delete'
+  class Delete < R '/([0-9A-Za-z_]+)/delete'
     def get page_name
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
-      Page.find_by_title(page_name).destroy() if is_admin?
+      Page.find_by_title(page_name.gsub(/_/,' ')).destroy() if is_admin?
       redirect Junebug.startpage
     end
     
   end
 
-  class Revert < R '/([\w ]+)/(\d+)/revert'
+  class Revert < R '/([0-9A-Za-z_]+)/(\d+)/revert'
     def get page_name, version
       redirect("#{Junebug.config['url']}/login") and return unless logged_in?
-      Page.find_by_title(page_name).revert_to!(version) if is_admin?
-      redirect "#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}"
+      Page.find_by_title(page_name.gsub(/_/,' ')).revert_to!(version) if is_admin?
+      redirect "#{Junebug.config['url']}/#{page_name}"
     end
   end
 
-  class Versions < R '/([\w ]+)/versions'
+  class Versions < R '/([0-9A-Za-z_]+)/versions'
     def get page_name
-      @page_title = "Version History: #{page_name}"
-      @page = Page.find_by_title(page_name)
+      page_name_spc = page_name.gsub(/_/,' ')
+      @page = Page.find_by_title(page_name_spc)
       @versions = @page.find_versions(:order => 'version DESC', :include => [:user])
+      @page_title = "Version History: #{page_name_spc}"
       render :versions
     end
   end
@@ -87,11 +90,12 @@ module Junebug::Controllers
     end
   end
 
-  class Backlinks < R '/([\w ]+)/backlinks'
+  class Backlinks < R '/([0-9A-Za-z_]+)/backlinks'
     def get page_name
-      @page = Page.find_by_title(page_name)
-      @page_title = "Backlinks for: #{page_name}"
-      @pages = Page.find(:all, :conditions => ["body LIKE ?", "%#{page_name}%"])
+      page_name_spc = page_name.gsub(/_/,' ')
+      @page = Page.find_by_title(page_name_spc)
+      @page_title = "Backlinks for: #{page_name_spc}"
+      @pages = Page.find(:all, :conditions => ["body LIKE ?", "%#{page_name_spc}%"])
       render :backlinks
     end
   end
@@ -104,11 +108,12 @@ module Junebug::Controllers
     end
   end
   
-  class Diff < R '/([\w ]+)/(\d+)/(\d+)/diff'
+  class Diff < R '/([0-9A-Za-z_]+)/(\d+)/(\d+)/diff'
     include HTMLDiff
     def get page_name, v1, v2
-      @page_title = "Diff: #{page_name}"
-      @page = Page.find_by_title(page_name)    
+      page_name_spc = page_name.gsub(/_/,' ')
+      @page_title = "Diff: #{page_name_spc}"
+      @page = Page.find_by_title(page_name_spc)    
       @v1 = @page.find_version(v1)
       @v2 = @page.find_version(v2)
       

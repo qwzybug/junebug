@@ -1,5 +1,5 @@
 # this what you want to be the default wiki page
-startpage: JunebugWiki
+startpage: Welcome_to_Junebug
 
 # server configuration
 host: 0.0.0.0

@@ -15,43 +15,43 @@ class JunebugTest < Camping::FunctionalTest
   def test_index
     get
     assert_response :redirect
-    assert_redirected_to '/JunebugWiki'
+    assert_redirected_to '/Welcome_to_Junebug'
   end
 
   def test_start_page
-    get '/JunebugWiki'
+    get '/Welcome_to_Junebug'
     assert_response :success
-    assert_match_body %r!title>JunebugWiki</title!
+    assert_match_body %r!title>Welcome to Junebug</title!
   end
 
   def test_login
     post '/login', :username => 'admin', :password => 'password'
     assert_response :redirect
-    assert_redirected_to '/JunebugWiki'
+    assert_redirected_to '/Welcome_to_Junebug'
     
     get '/logout'
     assert_response :redirect
-    assert_redirected_to '/JunebugWiki'
+    assert_redirected_to '/Welcome_to_Junebug'
   end
 
   def test_required_login
-    get '/JunebugWiki/edit'
+    get '/Welcome_to_Junebug/edit'
     assert_response :redirect
     assert_redirected_to '/login'
     
-    get '/JunebugWiki/1/edit'
+    get '/Welcome_to_Junebug/1/edit'
     assert_response :redirect
     assert_redirected_to '/login'
 
-    post '/JunebugWiki/edit'
+    post '/Welcome_to_Junebug/edit'
     assert_response :redirect
     assert_redirected_to '/login'
 
-    get '/JunebugWiki/delete'
+    get '/Welcome_to_Junebug/delete'
     assert_response :redirect
     assert_redirected_to '/login'
 
-    get '/JunebugWiki/1/revert'
+    get '/Welcome_to_Junebug/1/revert'
     assert_response :redirect
     assert_redirected_to '/login'
   end
@@ -100,9 +100,6 @@ class PageTest < Camping::UnitTest
 
     page = create(:title => 'test page')
     assert page.valid?
-
-    page = create(:title => 'test_page')
-    assert page.valid?
         
     page = create(:title => 'test')
     assert page.valid?
@@ -139,6 +136,10 @@ class PageTest < Camping::UnitTest
     page = create(:title => 'page\'s')
     deny page.valid?
     assert_not_nil page.errors.on(:title)
+
+    page = create(:title => 'test_title')
+    deny page.valid?
+    assert_not_nil page.errors.on(:title)
   end
   
   def test_unique_title
@@ -153,14 +154,6 @@ class PageTest < Camping::UnitTest
     # lowercase
     page2 = create(:title => 'testtitle')
     assert page2.valid?
-
-    # create page with underscores
-    page1 = create(:title => 'test_title')
-    assert page1.valid?
-
-    # different from page with spaces
-    page1 = create(:title => 'test title')
-    assert page1.valid?
   end
 
   def test_spaces
