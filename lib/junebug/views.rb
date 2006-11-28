@@ -23,10 +23,10 @@ module Junebug::Views
   def show
     _header (@version.version == @page.version ? :backlinks : :show)
     _body do
-      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 0 0 5px 5px;'} if logged_in? && (@version.version == @page.version && (! @page.readonly || is_admin?))
+      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 0 0 5px 5px;'} if (@version.version == @page.version && (! @page.readonly || is_admin?))
       h1 @page.title
       _markup @version.body
-      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 5px 0 0 5px;'} if logged_in? && (@version.version == @page.version && (! @page.readonly || is_admin?)) && (@version.body && @version.body.size > 200)
+      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 5px 0 0 5px;'} if (@version.version == @page.version && (! @page.readonly || is_admin?)) && (@version.body && @version.body.size > 200)
       br :clear=>'all'
     end
     _footer {
@@ -64,7 +64,7 @@ module Junebug::Views
             br
             input :value => @page.title, :name => 'post_title', :size => 30, 
                   :type => 'text'
-            small " word characters [0-9A-Za-z] and spaces only"
+            small " word characters (0-9A-Za-z), dashes, and spaces only"
           }
           p {
             label 'Page Content'

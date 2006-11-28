@@ -1,5 +1,6 @@
 = 0.0.23 2006-11-29
 
+* Make edit button always visible
 * Fix for camping error on initial load
 * Allow dashes in wikiwords
 

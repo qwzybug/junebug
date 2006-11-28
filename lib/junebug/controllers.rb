@@ -21,7 +21,7 @@ module Junebug::Controllers
 
   class Edit < R '/([0-9A-Za-z_-]+)/edit', '/([0-9A-Za-z_-]+)/(\d+)/edit' 
     def get page_name, version = nil
-      redirect("#{Junebug.config['url']}/login") and return unless logged_in?
+      redirect("#{Junebug.config['url']}/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
       @page = Page.find(:first, :conditions=>['title = ?', page_name_spc])
       @page = Page.create(:title => page_name_spc, :user_id=>@state.user.id) unless @page
@@ -32,7 +32,7 @@ module Junebug::Controllers
     
     # FIXME: no error checking, also no verify quicksave/readonly rights
     def post page_name
-      redirect("#{Junebug.config['url']}/login") and return unless logged_in?
+      redirect("#{Junebug.config['url']}/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
       if input.submit == 'save'
         if ! input.quicksave
