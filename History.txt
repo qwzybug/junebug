@@ -1,3 +1,8 @@
+= 0.0.23 2006-11-29
+
+* Fix for camping error on initial load
+* Allow dashes in wikiwords
+
 = 0.0.22 2006-11-28
 
 * *EXISTING USERS PLEASE READ THE RELEASE NOTES*

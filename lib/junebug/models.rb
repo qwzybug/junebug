@@ -27,11 +27,11 @@ module Junebug::Models
   class Page < Base
     belongs_to :user, :class_name=>"Junebug::Models::User" # Hack to prevent camping error on initial load
     #PAGE_LINK = /\[\[([^\]|]*)[|]?([^\]]*)\]\]/
-    PAGE_LINK = /\[\[([0-9A-Za-z ]+)[|]?([^\]]*)\]\]/
+    PAGE_LINK = /\[\[([0-9A-Za-z -]+)[|]?([^\]]*)\]\]/
     #before_save { |r| r.title = r.title.underscore }
     #PAGE_LINK = /([A-Z][a-z]+[A-Z]\w+)/
     validates_uniqueness_of :title
-    validates_format_of :title, :with => /^[0-9A-Za-z ]+$/
+    validates_format_of :title, :with => /^[0-9A-Za-z -]+$/
     validates_presence_of :title
     acts_as_versioned
     non_versioned_fields.push 'title'

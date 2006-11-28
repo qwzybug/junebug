@@ -98,6 +98,9 @@ class PageTest < Camping::UnitTest
     page = create(:title => 'Test Page')
     assert page.valid?
 
+    page = create(:title => 'Test-Page')
+    assert page.valid?
+    
     page = create(:title => 'test page')
     assert page.valid?
         
@@ -126,10 +129,6 @@ class PageTest < Camping::UnitTest
     assert_not_nil page.errors.on(:title)
 
     page = create(:title => '*')
-    deny page.valid?
-    assert_not_nil page.errors.on(:title)
-    
-    page = create(:title => 'page-1')
     deny page.valid?
     assert_not_nil page.errors.on(:title)
 

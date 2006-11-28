@@ -2,7 +2,6 @@
 
 TODO
 
-* probably remove yui grid
 * should probably separate signup/login
 * signup with captcha
 * authentication tests
