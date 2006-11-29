@@ -6,7 +6,7 @@ include Junebug::Models
 
 class JunebugTest < Camping::FunctionalTest
 
-  fixtures :junebug_users
+  #fixtures :junebug_users
   
   def setup
     super
@@ -43,10 +43,6 @@ class JunebugTest < Camping::FunctionalTest
     assert_response :redirect
     assert_redirected_to '/login'
 
-    post '/Welcome_to_Junebug/edit'
-    assert_response :redirect
-    assert_redirected_to '/login'
-
     get '/Welcome_to_Junebug/delete'
     assert_response :redirect
     assert_redirected_to '/login'
@@ -54,6 +50,47 @@ class JunebugTest < Camping::FunctionalTest
     get '/Welcome_to_Junebug/1/revert'
     assert_response :redirect
     assert_redirected_to '/login'
+  end
+  
+  def test_edit_cycle
+    get '/Welcome_to_Junebug/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
+    
+    post '/login', :username => 'admin', :password => 'password'
+    assert_response :redirect
+    assert_redirected_to '/Welcome_to_Junebug'
+    
+    get '/Welcome_to_Junebug/edit'
+    assert_response :success
+
+    pagename = "Welcome to Junebug"
+    page = Junebug::Models::Page.find_by_title(pagename)
+    
+    # submit nochange
+    post "/#{page.title_url}/edit", :post_title=>page.title, :post_body=>page.body, :post_readonly=>page.readonly, :submit=>'save'
+    assert_response :redirect
+    assert_redirected_to "/#{page.title_url}"
+    page2 = Junebug::Models::Page.find_by_title(page.title)
+    assert_equal page.title, page2.title
+    assert_equal page.body, page2.body
+    assert_equal page.user_id, page2.user_id
+    assert_equal page.readonly, page2.readonly
+    assert_equal page.version+1, page2.version
+
+    pagename = "Welcome to Junebug"
+    page = Junebug::Models::Page.find_by_title(pagename)
+    
+    # submit edited title and body
+    post "/#{page.title_url}/edit", :post_title=>page.title+'2', :post_body=>page.body+'2', :post_readonly=>page.readonly, :submit=>'save'
+    assert_response :redirect
+    assert_redirected_to "/#{page.title_url+'2'}"
+    page2 = Junebug::Models::Page.find_by_title(page.title+'2')
+    assert_equal page.title+'2', page2.title
+    assert_equal page.body+'2', page2.body
+    assert_equal page.user_id, page2.user_id
+    assert_equal page.readonly, page2.readonly
+    assert_equal page.version+1, page2.version
   end
 
 
