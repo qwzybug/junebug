@@ -1,5 +1,5 @@
 # this what you want to be the default wiki page
-startpage: /Welcome_to_Junebug
+startpage: Welcome_to_Junebug
 
 # server configuration
 host: 0.0.0.0
@@ -31,7 +31,7 @@ dbconnection:
 
 # configuring rss
 # you should only need to change this is you have an external feed manager like feedburner
-feedtitle: 'Wiki Updates'
+feedtitle: Wiki Updates
 feedurl: http://localhost:3301
 feed: http://localhost:3301/all/feed
 
