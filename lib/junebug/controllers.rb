@@ -2,7 +2,6 @@ require 'junebug/ext/diff'
 
 module Junebug::Controllers
   
-
   class Index < R '/'
     def get
       redirect Junebug.startpage
@@ -11,8 +10,7 @@ module Junebug::Controllers
 
   class Show < R '/([0-9A-Za-z_-]+)', '/([0-9A-Za-z_-]+)/(\d+)'
     def get page_name, version = nil
-      #redirect(Edit, page_name, 1) and return unless @page = Page.find_by_title(page_name)
-      redirect("#{Junebug.config['url']}/#{page_name.gsub(/ /,'+')}/1/edit") and return unless @page = Page.find_by_title(page_name.gsub(/_/,' '))
+      redirect(Edit, page_name, 1) and return unless @page = Page.find_by_title(page_name.gsub(/_/,' '))
       @page_title = @page.title
       @version = (version.nil? or version == @page.version.to_s) ? @page : @page.versions.find_by_version(version)
       render :show
@@ -21,7 +19,7 @@ module Junebug::Controllers
 
   class Edit < R '/([0-9A-Za-z_-]+)/edit', '/([0-9A-Za-z_-]+)/(\d+)/edit' 
     def get page_name, version = nil
-      redirect("#{Junebug.config['url']}/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
+      redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
       @page = Page.find(:first, :conditions=>['title = ?', page_name_spc])
       @page = Page.create(:title => page_name_spc, :user_id=>@state.user.id) unless @page
@@ -32,7 +30,7 @@ module Junebug::Controllers
     
     # FIXME: no error checking, also no verify quicksave/readonly rights
     def post page_name
-      redirect("#{Junebug.config['url']}/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
+      redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
       if input.submit == 'save'
         if ! input.quicksave
@@ -47,17 +45,16 @@ module Junebug::Controllers
           current_version.update_attributes(attrs)
           page.without_revision { page.update_attributes(attrs) }
         end
-        # redirect Show, input.post_title
-        redirect "#{Junebug.config['url']}/#{input.post_title.gsub(/ /,'_')}"
+        redirect Show, input.post_title.gsub(/ /,'_')
       else # cancel
-        redirect "#{Junebug.config['url']}/#{page_name}"
+        redirect Show, page_name
       end
     end
   end
   
   class Delete < R '/([0-9A-Za-z_-]+)/delete'
     def get page_name
-      redirect("#{Junebug.config['url']}/login") and return unless logged_in?
+      redirect("/login") and return unless logged_in?
       Page.find_by_title(page_name.gsub(/_/,' ')).destroy() if is_admin?
       redirect Junebug.startpage
     end
@@ -66,9 +63,9 @@ module Junebug::Controllers
 
   class Revert < R '/([0-9A-Za-z_-]+)/(\d+)/revert'
     def get page_name, version
-      redirect("#{Junebug.config['url']}/login") and return unless logged_in?
+      redirect("/login") and return unless logged_in?
       Page.find_by_title(page_name.gsub(/_/,' ')).revert_to!(version) if is_admin?
-      redirect "#{Junebug.config['url']}/#{page_name}"
+      redirect Show, page_name
     end
   end
 
@@ -164,7 +161,7 @@ module Junebug::Controllers
       if @user
         if @user.password == input.password
           @state.user = @user
-          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(Junebug.config['url'] + input.return_to)
+          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
           return
         else
           @notice = 'Authentication failed'
@@ -173,7 +170,7 @@ module Junebug::Controllers
         @user = User.create :username=>input.username, :password=>input.password
         if @user.errors.empty?
           @state.user = @user
-          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(Junebug.config['url'] + input.return_to)
+          input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
           return
         else
           @notice = @user.errors.full_messages[0]
@@ -186,7 +183,7 @@ module Junebug::Controllers
   class Logout
       def get
         @state.user = nil
-        input.return_to.blank? ? redirect(Junebug.startpage) : redirect(Junebug.config['url'] + input.return_to)
+        input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
       end
   end
 end

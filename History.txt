@@ -1,8 +1,12 @@
-= 0.0.23 2006-11-29
+= 0.0.23 2006-11-28
 
+* *EXISTING USERS PLEASE READ THE RELEASE NOTES*
+* Cleaned up redirect handling
+* Renamed 'url' config parameter to 'feedurl'
 * Make edit button always visible
 * Fix for camping error on initial load
 * Allow dashes in wikiwords
+* More tests
 
 = 0.0.22 2006-11-28
 

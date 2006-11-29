@@ -1,3 +1,10 @@
+= 0.0.23 2006-11-28
+
+Robert Gogolok rightly pointed out that the 'url' parameter in config.yml was confusing, so I renamed it 'feedurl'.  You will need to make this change to any existing junebug wikis.
+
+Also, as part of this change, I cleaned up the redirect handling code.  This might affect users operating a proxied Junebug wiki.  I will add some notes to http://www.junebugwiki.com for setting up an apache proxy for Junebug.
+
+
 = 0.0.22 2006-11-28
 
 The wikiword syntax has changed slightly.  Starting in this version, wikiwords can not contain underscores. Furthermore, in page urls, spaces will now be replaced by underscores.  Example:

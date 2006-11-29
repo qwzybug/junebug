@@ -35,7 +35,7 @@ module Junebug
   end
   
   def self.startpage
-    "#{Junebug.config['url']}/#{Junebug.config['startpage']}"
+    Junebug.config['startpage']
   end
 end
 

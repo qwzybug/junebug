@@ -288,14 +288,14 @@ module Junebug::Views
     xml.feed "xmlns"=>"http://www.w3.org/2005/Atom" do
 
       xml.title Junebug.config['feedtitle'] || "Wiki Updates"
-      xml.id Junebug.config['url'] + '/'
+      xml.id Junebug.config['feedurl'] + '/'
       xml.link "rel" => "self", "href" => Junebug.config['feed']
 
       pages = Junebug::Models::Page.find(:all, :order => 'updated_at DESC', :limit => 20)
       xml.updated pages.first.updated_at.xmlschema
 
       pages.each do |page|
-        url = Junebug.config['url'] + '/' + page.title
+        url = Junebug.config['feedurl'] + '/' + page.title
         xml.entry do
           xml.id url
           xml.title page.title
