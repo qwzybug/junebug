@@ -67,25 +67,26 @@ module Junebug::Views
             small " word characters (0-9A-Za-z), dashes, and spaces only"
           }
           p {
-            label 'Page Content'
+            a 'syntax help', :href => 'http://hobix.com/textile/', :target=>'_blank', :style => 'float: right;'
+            label 'Page Content '
             br
             textarea @page.body, :name => 'post_body', :rows => 17, :cols => 80
           }
+          input :type => 'submit', :name=>'submit', :value=>'cancel', :class=>'button', :style=>'float: right;'
+          input :type => 'submit', :name=>'submit', :value=>'save', :class=>'button', :style=>'float: right;', :accesskey => 's'
           if is_admin?
             opts = { :type => 'checkbox', :value=>'1', :name => 'post_readonly' }
             opts[:checked] = 1 if @page.readonly
             input opts
             text " Readonly "
+            br
           end
           if @page.user_id == @state.user.id
             input :type=>'checkbox', :value=>'1', :name=>'quicksave'
-            text " Quicksave "
+            text " Minor edit (don't increment version) "
           end
-          br
-          input :type => 'submit', :name=>'submit', :value=>'cancel', :class=>'button', :style=>'float: right;'
-          input :type => 'submit', :name=>'submit', :value=>'save', :class=>'button', :style=>'float: right;', :accesskey => 's'
+
         end
-        a 'syntax help', :href => 'http://hobix.com/textile/', :target=>'_blank'
         br :clear=>'all'
       }
     end

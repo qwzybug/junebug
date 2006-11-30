@@ -1,6 +1,7 @@
 = 0.0.24 2006-11-29
 
 * Accesskey attributes added for edit(e) and save(s).  Thanks willcodeforfoo!
+* Edit form tweaks
 
 
 = 0.0.23 2006-11-28
