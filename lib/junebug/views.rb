@@ -23,7 +23,7 @@ module Junebug::Views
   def show
     _header (@version.version == @page.version ? :backlinks : :show)
     _body do
-      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 0 0 5px 5px;'} if (@version.version == @page.version && (! @page.readonly || is_admin?))
+      _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 0 0 5px 5px;', :accesskey => 'e'} if (@version.version == @page.version && (! @page.readonly || is_admin?))
       h1 @page.title
       _markup @version.body
       _button 'edit', R(Edit, @page.title_url, @version.version), {:style=>'float: right; margin: 5px 0 0 5px;'} if (@version.version == @page.version && (! @page.readonly || is_admin?)) && (@version.body && @version.body.size > 200)
@@ -83,7 +83,7 @@ module Junebug::Views
           end
           br
           input :type => 'submit', :name=>'submit', :value=>'cancel', :class=>'button', :style=>'float: right;'
-          input :type => 'submit', :name=>'submit', :value=>'save', :class=>'button', :style=>'float: right;'
+          input :type => 'submit', :name=>'submit', :value=>'save', :class=>'button', :style=>'float: right;', :accesskey => 's'
         end
         a 'syntax help', :href => 'http://hobix.com/textile/', :target=>'_blank'
         br :clear=>'all'
