@@ -306,7 +306,9 @@ module Junebug::Views
           xml.link "rel" => "alternate", "href" => url
           xml.summary :type=>'html' do
             #xml.text! CGI::escapeHTML( %|<a href="#{url}">#{page.title}</a> updated by #{page.user.username} (<a href="#{url}/#{page.version-1}/#{page.version}/diff">diff</a>)| )+"\n"
-            xml.text! %|<a href="#{url}">#{page.title}</a> updated by #{page.user.username} (<a href="#{url}/#{page.version-1}/#{page.version}/diff">diff</a>)| +"\n"
+            xml.text! %|<a href="#{url}">#{page.title}</a> updated by #{page.user.username}|
+            xml.text! %| (<a href="#{url}/#{page.version-1}/#{page.version}/diff">diff</a>)| if page.version > 1
+            xml.text! "\n"
           end
           # xml.content do 
           #   xml.text! CGI::escapeHTML(page.body)+"\n"
