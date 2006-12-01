@@ -296,7 +296,7 @@ module Junebug::Views
       xml.updated pages.first.updated_at.xmlschema
 
       pages.each do |page|
-        url = Junebug.config['feedurl'] + '/' + page.title
+        url = Junebug.config['feedurl'] + '/' + page.title_url
         xml.entry do
           xml.id url
           xml.title page.title
