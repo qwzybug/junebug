@@ -12,7 +12,7 @@ module Junebug::Views
           link :href=>'/style/yui/reset.css', :type=>'text/css', :rel=>'stylesheet'
           link :href=>'/style/yui/fonts.css', :type=>'text/css', :rel=>'stylesheet'
           link :href=>'/style/base.css',      :type=>'text/css', :rel=>'stylesheet'
-          link :href=>Junebug.config['feed'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
+          link :href=>Junebug.config['feedurl'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
         }
         body {
           div :id=>'doc' do
@@ -278,7 +278,7 @@ module Junebug::Views
         text 'Powered by '
         a 'JunebugWiki', :href => 'http://www.junebugwiki.com/'
         text " <small>v#{Junebug::VERSION::STRING}</small> "
-        a :href => Junebug.config['feed'] do
+        a :href => Junebug.config['feedurl'] do
           img :src => '/images/feed-icon-14x14.png'
         end
       end
@@ -288,7 +288,7 @@ module Junebug::Views
   end
 
   def feed
-    site_url = Junebug.config['site_url'] || "http://#{Junebug.config['host']}:#{Junebug.config['port']}"
+    site_url = Junebug.config['siteurl'] || "http://#{Junebug.config['host']}:#{Junebug.config['port']}"
     site_domain = site_url.gsub(/^http:\/\//, '').gsub(/:/,'_')
     feed_url = site_url + R(Feed)
 
