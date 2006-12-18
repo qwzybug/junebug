@@ -1,22 +1,26 @@
-require 'redcloth'
+require 'junebug/ext/redcloth'
 
 module Junebug::Views
   
   def layout
-    html {
-      head {
-        title @page_title ? @page_title : @page.title
-        link :href=>'/style/yui/reset.css', :type=>'text/css', :rel=>'stylesheet'
-        link :href=>'/style/yui/fonts.css', :type=>'text/css', :rel=>'stylesheet'
-        link :href=>'/style/base.css',      :type=>'text/css', :rel=>'stylesheet'
-        link :href=>Junebug.config['feed'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
+    if @skip_layout
+      yield
+    else
+      html {
+        head {
+          title @page_title ? @page_title : @page.title
+          link :href=>'/style/yui/reset.css', :type=>'text/css', :rel=>'stylesheet'
+          link :href=>'/style/yui/fonts.css', :type=>'text/css', :rel=>'stylesheet'
+          link :href=>'/style/base.css',      :type=>'text/css', :rel=>'stylesheet'
+          link :href=>Junebug.config['feed'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
+        }
+        body {
+          div :id=>'doc' do
+            self << yield
+          end
+        }
       }
-      body {
-        div :id=>'doc' do
-          self << yield
-        end
-      }
-    }
+    end
   end
 
 
@@ -282,32 +286,35 @@ module Junebug::Views
     end
   end
 
-  def self.feed
-    xml = Builder::XmlMarkup.new(:indent => 2)
+  def feed
+    site_url = Junebug.config['site_url'] || "http://#{Junebug.config['host']}:#{Junebug.config['port']}"
+    site_domain = site_url.gsub(/^http:\/\//, '').gsub(/:/,'_')
+    feed_url = site_url + R(Feed)
+
+    xml = Builder::XmlMarkup.new(:target => self, :indent => 2)
 
     xml.instruct!
     xml.feed "xmlns"=>"http://www.w3.org/2005/Atom" do
 
       xml.title Junebug.config['feedtitle'] || "Wiki Updates"
-      xml.id Junebug.config['feedurl'] + '/'
-      xml.link "rel" => "self", "href" => Junebug.config['feed']
+      xml.id site_url
+      xml.link "rel" => "self", "href" => feed_url
 
       pages = Junebug::Models::Page.find(:all, :order => 'updated_at DESC', :limit => 20)
       xml.updated pages.first.updated_at.xmlschema
-
+      
       pages.each do |page|
-        url = Junebug.config['feedurl'] + '/' + page.title_url
+        atom_id = "tag:#{site_domain},#{page.created_at.strftime("%Y-%m-%d")}:page/#{page.id}/#{page.version}"
         xml.entry do
-          xml.id url
+          xml.id atom_id
           xml.title page.title
           xml.updated page.updated_at.xmlschema
           
           xml.author { xml.name page.user.username }
-          xml.link "rel" => "alternate", "href" => url
+          xml.link "rel" => "alternate", "href" => site_url + R(Show, page.title_url)
           xml.summary :type=>'html' do
-            #xml.text! CGI::escapeHTML( %|<a href="#{url}">#{page.title}</a> updated by #{page.user.username} (<a href="#{url}/#{page.version-1}/#{page.version}/diff">diff</a>)| )+"\n"
-            xml.text! %|<a href="#{url}">#{page.title}</a> updated by #{page.user.username}|
-            xml.text! %| (<a href="#{url}/#{page.version-1}/#{page.version}/diff">diff</a>)| if page.version > 1
+            xml.text! %|<a href="#{site_url + R(Show, page.title_url)}">#{page.title}</a> updated by #{page.user.username}|
+            xml.text! %| (<a href="#{site_url + R(Diff,page.title_url,page.version-1,page.version)}">diff</a>)| if page.version > 1
             xml.text! "\n"
           end
           # xml.content do 

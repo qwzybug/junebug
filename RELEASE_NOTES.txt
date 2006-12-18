@@ -1,3 +1,18 @@
+= 0.0.26 2006-12-18
+
+A couple of changes to the config.yml parameters were made as part of the feed cleanup.  If you have an existing Junebug wiki, you may need to make the following changes:
+
+* feedurl is now the url of the public feed, whether through a proxy, or using a feed hosting service.
+* siteurl is the base url of the wiki.  The feed generator will use this to point to the feed entries to the wiki.
+
+Both of these parameters are now optional, so if you just serve your site locally, just leave them commented out.
+
+Example: for www.junebugwiki.com, which is served through an apache proxy, I'm using the following:
+
+feedurl: http://www.junebugwiki.com/all/feed
+siteurl: http://www.junebugwiki.com
+
+
 = 0.0.23 2006-11-28
 
 Robert Gogolok rightly pointed out that the 'url' parameter in config.yml was confusing, so I renamed it 'feedurl'.  You will need to make this change to any existing junebug wikis.

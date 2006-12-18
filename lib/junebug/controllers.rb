@@ -128,7 +128,9 @@ module Junebug::Controllers
   class Feed < R '/all/feed'
     def get
       @headers['Content-Type'] = 'application/xml'
-      return Junebug::Views.feed
+      @skip_layout = true
+      render :feed
+      #return Junebug::Views.feed
     end
   end
 

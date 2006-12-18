@@ -2,7 +2,7 @@
 startpage: Welcome_to_Junebug
 
 # server configuration
-host: 0.0.0.0
+host: localhost
 port: 3301
 
 # if you want to have the wiki root running on something other than /
@@ -30,8 +30,16 @@ dbconnection:
 #  host: localhost
 
 # configuring rss
-# you should only need to change this is you have an external feed manager like feedburner
 feedtitle: Wiki Updates
-feedurl: http://localhost:3301
-feed: http://localhost:3301/all/feed
+#
+# Optional feed parameters:
+#
+# Example proxy config:
+#feedurl: http://www.mywiki.com/all/feed
+#siteurl: http://www.mywiki.com
+#
+# Example feedburner config:
+#feedurl: http://feeds.feedburner.com/MyWiki
+#siteurl: http://www.mywiki.com
+
 
