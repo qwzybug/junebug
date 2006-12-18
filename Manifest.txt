@@ -19,6 +19,12 @@ lib/junebug/controllers.rb
 lib/junebug/ext/acts_as_versioned.rb
 lib/junebug/ext/diff.rb
 lib/junebug/ext/mosquito.rb
+lib/junebug/ext/redcloth.rb
+lib/junebug/ext/redcloth/all_formats.rb
+lib/junebug/ext/redcloth/base.rb
+lib/junebug/ext/redcloth/docbook.rb
+lib/junebug/ext/redcloth/markdown.rb
+lib/junebug/ext/redcloth/textile.rb
 lib/junebug/generator.rb
 lib/junebug/helpers.rb
 lib/junebug/models.rb
