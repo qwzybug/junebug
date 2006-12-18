@@ -227,7 +227,8 @@ module Junebug::Views
         %Q{<span>#{title}<a href="#{self/R(Edit, page_url, 1)}">?</a></span>}
       end
     end
-    text RedCloth.new(auto_link_urls(txt), [ ]).to_html
+    #text RedCloth.new(auto_link_urls(txt), [ ]).to_html
+    text RedCloth.new(txt, [ ]).to_html
   end
 
   def _header type

@@ -49,7 +49,6 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
   p.extra_deps = [
       ['mongrel',      '>=0.3.13.3'],
       ['camping',      '>=1.5'],
-      ['RedCloth',     '>=3.0.4'],
       ['daemons',      '>=1.0.3'],
       ['sqlite3-ruby', '>=1.1.0.1'],
       ['activerecord', '>=1.14.4']
