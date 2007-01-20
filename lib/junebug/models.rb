@@ -25,7 +25,7 @@ module Junebug::Models
   end
 
   class Page < Base
-    belongs_to :user, :class_name=>"Junebug::Models::User" # Hack to prevent camping error on initial load
+    belongs_to :user, :class_name=>"Junebug::Models::User", :foreign_key=>'user_id' # Hack to prevent camping error on initial load
     #PAGE_LINK = /\[\[([^\]|]*)[|]?([^\]]*)\]\]/
     PAGE_LINK = /\[\[([0-9A-Za-z -]+)[|]?([^\]]*)\]\]/
     #before_save { |r| r.title = r.title.underscore }
