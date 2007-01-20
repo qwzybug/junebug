@@ -46,7 +46,7 @@ module Junebug::Models
   end
   
   class Page::Version < Base
-    belongs_to :user, :class_name=>"Junebug::Models::User" # Hack to prevent camping error on initial load
+    belongs_to :user, :class_name=>"Junebug::Models::User", :foreign_key=>'user_id' # Hack to prevent camping error on initial load
   end
 
   class CreateJunebug < V 1.0
