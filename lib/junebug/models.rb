@@ -90,7 +90,12 @@ module Junebug::Models
       
       # Install some default pages
       pages_file = File.dirname(__FILE__) + "/../../dump/junebug_pages.yml"
-      YAML.load_file(pages_file).each {|page_data|Page.create(page_data) } if File.exist?(pages_file)
+      if File.exist?(pages_file)
+        puts "Loading fixtures"
+        YAML.load_file(pages_file).each {|page_data|Page.create(page_data) }
+      else
+        puts "Could not find fixtures: #{pages_file}" 
+      end
     end
     def self.down
       drop_table :junebug_pages

@@ -47,11 +47,11 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
   #p.changes        - A description of the release's latest changes.
   #p.spec_extras    - A hash of extra values to set in the gemspec.
   p.extra_deps = [
-      ['mongrel',      '>=0.3.13.3'],
+      ['mongrel',      '>=1.0'],
       ['camping',      '>=1.5'],
-      ['daemons',      '>=1.0.3'],
+      ['daemons',      '>=1.0.4'],
       ['sqlite3-ruby', '>=1.1.0.1'],
-      ['activerecord', '>=1.14.4']
+      ['activerecord', '>=1.15.1']
     ]
 end
 

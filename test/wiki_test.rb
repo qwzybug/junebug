@@ -1,19 +1,19 @@
-require File.dirname(__FILE__) + "/../lib/junebug/ext/mosquito"
+require 'rubygems'
+require 'mosquito'
 require File.dirname(__FILE__) + "/../lib/junebug"
 
 Junebug.create
 include Junebug::Models
 
-class JunebugTest < Camping::FunctionalTest
+class TestJunebug < Camping::FunctionalTest
 
   #fixtures :junebug_users
-  
   def setup
     super
   end
   
   def test_index
-    get
+    get '/'
     assert_response :redirect
     assert_redirected_to '/Welcome_to_Junebug'
   end
@@ -107,7 +107,7 @@ class JunebugTest < Camping::FunctionalTest
 # 
 end
 
-class PageTest < Camping::UnitTest
+class TestPage < Camping::UnitTest
 
   fixtures :junebug_users, :junebug_pages, :junebug_page_versions
       
@@ -276,6 +276,7 @@ class UserTest < Camping::UnitTest
 
   def test_spaces
     user = create(:username => 'aaaaaa  ', :password =>'aaaaaa  ')
+    # puts user.inspect
     assert user.valid?
     assert user.username == 'aaaaaa'
     assert user.password == 'aaaaaa'
