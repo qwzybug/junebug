@@ -246,7 +246,7 @@ module Junebug::Views
       span :id=>'navlinks' do
         a 'Home',  :href => R(Show, Junebug.config['startpage'])
         text ' | '
-        a 'RecentChanges', :href => R(Recent)
+        a 'Recent Changes', :href => R(Recent)
         text ' | '
         a 'All Pages', :href => R(List)
         text ' | '
