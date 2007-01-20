@@ -14,6 +14,7 @@ require 'junebug/controllers'
 
 require 'yaml'
 require 'mongrel'
+require 'mongrel/camping'
 require 'fileutils'
 
 module Junebug
