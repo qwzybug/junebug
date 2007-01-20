@@ -20,7 +20,7 @@ input.button {
 }
 
 input, textarea {
-    padding: 2px;
+    padding: 4px 2px 1px 2px;
     margin-bottom: 5px;
 /*    font-family:"Bitstream Vera Sans Mono", "Monaco", "Courier", monospace;*/
 }
@@ -63,13 +63,22 @@ body {
 #hd {
 /*    border-top: 6px solid #809fff;*/
     background-color: #6677aa;
-    padding: 8px 25px;
+    padding: 8px 25px 10px;
     color: #ffffff;
     margin-bottom: 10px;
 }
 
 #hd #userlinks {
     float: right;
+}
+
+#hd #search {
+    float: right;
+    margin-top: 5px;
+}
+
+#hd #search input {
+    margin-bottom: 0px;
 }
 
 #hd a {
@@ -157,7 +166,7 @@ body {
 /* WIKI CONTENT STYLES */
 .content {
     font-size: 107%;
-    padding: 25px;
+    padding: 20px 25px;
     min-height: 300px;
 }
 

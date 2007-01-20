@@ -120,6 +120,25 @@ module Junebug::Views
   end
 
 
+  def search
+    _header :show
+    _body do
+      h1 "Search results"
+
+      form :action => R(Search), :method => 'post' do
+        input :name => 'q', :type => 'text', :value=>@search_term, :accesskey => 's' 
+        input :type => 'submit', :name => 'search', :value => 'Search',
+          :style=>'margin: 0 0 5px 5px;'
+      end
+
+      ul {
+        @pages.each { |p| li{ a p.title, :href => R(Show, p.title_url) } }
+      }
+    end
+    _footer { '' }
+  end
+
+
   def backlinks
     _header :show
     _body do
@@ -252,7 +271,18 @@ module Junebug::Views
         text ' | '
         a 'Help', :href => R(Show, "Junebug_help") 
       end
-            
+      
+      span :id=>'search' do
+        text 'Search: '
+        form :action => R(Search), :method => 'post' do
+          input :name => 'q', :type => 'text', :value=>(''), :accesskey => 's' 
+          #input :type => 'submit', :name => 'search', :value => 'Search',
+          #  :style=>'margin: 0 0 5px 5px;'
+        end
+      end
+
+      br :clear => 'all'
+      
       # if type == :static
       #   h1 page_title
       # elsif type == :backlinks

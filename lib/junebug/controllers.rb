@@ -87,6 +87,15 @@ module Junebug::Controllers
     end
   end
 
+  class Search
+    def post 
+      @search_term = input.q
+      @page_title = "Search Results for: #{@search_term}"
+      @pages = Page.find(:all, :conditions => ["body LIKE ? OR title LIKE ?", "%#{@search_term}%", "%#{@search_term}%" ])
+      render :search
+    end
+  end
+
   class Backlinks < R '/([0-9A-Za-z_-]+)/backlinks'
     def get page_name
       page_name_spc = page_name.gsub(/_/,' ')
@@ -137,11 +146,11 @@ module Junebug::Controllers
   class Static < R '(/images/.+)', '(/style/.+)'         
     MIME_TYPES = {'.css' => 'text/css', '.js' => 'text/javascript', '.jpg' => 'image/jpeg'}
     #PATH = __FILE__[/(.*)\//, 1]
-    PATH = ENV['JUNEBUG_ROOT'] || '.'
+    PATH = ENV['JUNEBUG_ROOT'] || File.expand_path('.')
     
     def get(path)
       @headers['Content-Type'] = MIME_TYPES[path[/\.\w+$/, 0]] || "text/plain"
-      unless path =~ /\.\./ # sample test to prevent directory traversal attacks
+      unless path.include? '..' # sample test to prevent directory traversal attacks
         @headers['X-Sendfile'] = "#{PATH}/public#{path}"
       else
         "404 - Invalid path"
