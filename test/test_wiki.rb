@@ -91,6 +91,10 @@ class TestJunebug < Camping::FunctionalTest
     assert_equal page.user_id, page2.user_id
     assert_equal page.readonly, page2.readonly
     assert_equal page.version+1, page2.version
+    
+    # set it back
+    post "/#{page2.title_url}/edit", :post_title=>page.title, :post_body=>page.body, :post_readonly=>page.readonly, :submit=>'save'
+
   end
 
 
@@ -110,7 +114,11 @@ end
 class TestPage < Camping::UnitTest
 
   fixtures :junebug_users, :junebug_pages, :junebug_page_versions
-      
+
+  def setup
+    super
+  end
+
   def test_create
     page = create
     assert page.valid?
@@ -179,16 +187,16 @@ class TestPage < Camping::UnitTest
   end
   
   def test_unique_title
-    page1 = create(:title => 'TestTitle')
+    page1 = create(:title => 'TestTitle12')
     assert page1.valid?
     
     # identical
-    page2 = create
+    page2 = create(:title => 'TestTitle12')
     deny page2.valid?
     assert_not_nil page2.errors.on(:title)
 
     # lowercase
-    page2 = create(:title => 'testtitle')
+    page2 = create(:title => 'testtitle12')
     assert page2.valid?
   end
 
@@ -275,11 +283,11 @@ class UserTest < Camping::UnitTest
   end
 
   def test_spaces
-    user = create(:username => 'aaaaaa  ', :password =>'aaaaaa  ')
+    user = create(:username => 'bbbbbb  ', :password =>'bbbbbb  ')
     # puts user.inspect
     assert user.valid?
-    assert user.username == 'aaaaaa'
-    assert user.password == 'aaaaaa'
+    assert user.username == 'bbbbbb'
+    assert user.password == 'bbbbbb'
   end
   
   def test_lowercase
