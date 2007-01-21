@@ -1,4 +1,5 @@
 require 'junebug'
+require 'junebug/config'
 
 namespace :update do
 
