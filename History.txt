@@ -1,3 +1,9 @@
+= 0.0.29 2007-04-15
+
+* Support Unicode wikiwords. Thanks Julian Tarkhanov
+* Disable suprious warnings when running tests.  Thanks Julian Tarkhanov
+* Css tweak to prevent overflow in pre tags. Thanks Leslie Viljoen
+
 = 0.0.28 2007-01-20
 
 * Fix uninitialized constant Mongrel::Camping error
