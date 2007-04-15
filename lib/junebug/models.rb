@@ -25,14 +25,20 @@ module Junebug::Models
   end
 
   class Page < Base
-    belongs_to :user, :class_name=>"Junebug::Models::User", :foreign_key=>'user_id' # Hack to prevent camping error on initial load
-    #PAGE_LINK = /\[\[([^\]|]*)[|]?([^\]]*)\]\]/
-    PAGE_LINK = /\[\[([0-9A-Za-z -]+)[|]?([^\]]*)\]\]/
-    #before_save { |r| r.title = r.title.underscore }
-    #PAGE_LINK = /([A-Z][a-z]+[A-Z]\w+)/
-    validates_uniqueness_of :title
-    validates_format_of :title, :with => /^[0-9A-Za-z -]+$/
+    belongs_to :user, :class_name=>"Junebug::Models::User", :foreign_key=>'user_id' # Hack to prevent
+    # camping error on initial load
+    
+    PAGE_TITLE = '[\w0-9A-Za-z -]+' # We need the \w for other UTF chars
+    PAGE_SLUG = PAGE_TITLE.gsub(/ /, '_')
+    DENY_UNDERSCORES =  /^([^_]+)$/
+    PAGE_LINK = /\[\[(#{PAGE_TITLE})[|]?([^\]]*)\]\]/
+    
     validates_presence_of :title
+    validates_uniqueness_of :title
+    validates_format_of :title, :with => /^(#{PAGE_TITLE})$/
+    # Underscores have to be checked separately because they are included in \w
+    validates_format_of :title, :with => /^(#{DENY_UNDERSCORES})$/
+    
     acts_as_versioned
     non_versioned_fields.push 'title'
     
@@ -41,7 +47,7 @@ module Junebug::Models
     end
     
     def title_url
-      title.gsub(' ','_')
+      title.gsub(/\s/,'_')
     end
   end
   

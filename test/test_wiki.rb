@@ -24,6 +24,17 @@ class TestJunebug < Camping::FunctionalTest
     assert_match_body %r!title>Welcome to Junebug</title!
   end
 
+  def test_unicody_slug
+    unic_page = Page.create({ :title => "ВикиСлово", 
+                  :body => "Слово сказано",
+                  :user_id => 1,
+                    })
+      
+    get '/ВикиСлово'
+    assert_response :success
+    assert_match_body /Слово сказано/
+  end
+  
   def test_login
     post '/login', :username => 'admin', :password => 'password'
     assert_response :redirect
@@ -158,6 +169,8 @@ class TestPage < Camping::UnitTest
     page = create(:title => '1')
     assert page.valid?
 
+    page = create(:title => 'вики слово')
+    assert page.valid?
   end
   
   def test_invalid_title
@@ -184,6 +197,7 @@ class TestPage < Camping::UnitTest
     page = create(:title => 'test_title')
     deny page.valid?
     assert_not_nil page.errors.on(:title)
+
   end
   
   def test_unique_title

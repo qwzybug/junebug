@@ -1,6 +1,11 @@
 require 'junebug/ext/diff'
 
+
 module Junebug::Controllers
+  # DRY and besides otherwise you need to escape every \d
+  def self.slug(after  = '')
+    "/(#{Junebug::Models::Page::PAGE_SLUG})" + after
+  end
   
   class Index < R '/'
     def get
@@ -8,7 +13,7 @@ module Junebug::Controllers
     end
   end
 
-  class Show < R '/([0-9A-Za-z_-]+)', '/([0-9A-Za-z_-]+)/(\d+)'
+  class Show < R slug, slug('/(\d+)')
     def get page_name, version = nil
       redirect(Edit, page_name, 1) and return unless @page = Page.find_by_title(page_name.gsub(/_/,' '))
       @page_title = @page.title
@@ -17,7 +22,8 @@ module Junebug::Controllers
     end
   end
 
-  class Edit < R '/([0-9A-Za-z_-]+)/edit', '/([0-9A-Za-z_-]+)/(\d+)/edit' 
+  class Edit < R slug('/edit'), slug('/(\d+)/edit') 
+    
     def get page_name, version = nil
       redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
@@ -52,7 +58,7 @@ module Junebug::Controllers
     end
   end
   
-  class Delete < R '/([0-9A-Za-z_-]+)/delete'
+  class Delete < R slug('/delete')
     def get page_name
       redirect("/login") and return unless logged_in?
       Page.find_by_title(page_name.gsub(/_/,' ')).destroy() if is_admin?
@@ -61,7 +67,7 @@ module Junebug::Controllers
     
   end
 
-  class Revert < R '/([0-9A-Za-z_-]+)/(\d+)/revert'
+  class Revert < R slug('/(\d)/revert')
     def get page_name, version
       redirect("/login") and return unless logged_in?
       Page.find_by_title(page_name.gsub(/_/,' ')).revert_to!(version) if is_admin?
@@ -69,7 +75,7 @@ module Junebug::Controllers
     end
   end
 
-  class Versions < R '/([0-9A-Za-z_-]+)/versions'
+  class Versions < R slug('/versions')
     def get page_name
       page_name_spc = page_name.gsub(/_/,' ')
       @page = Page.find_by_title(page_name_spc)
@@ -96,7 +102,7 @@ module Junebug::Controllers
     end
   end
 
-  class Backlinks < R '/([0-9A-Za-z_-]+)/backlinks'
+  class Backlinks < R slug('/backlinks')
     def get page_name
       page_name_spc = page_name.gsub(/_/,' ')
       @page = Page.find_by_title(page_name_spc)
@@ -114,7 +120,7 @@ module Junebug::Controllers
     end
   end
   
-  class Diff < R '/([0-9A-Za-z_-]+)/(\d+)/(\d+)/diff'
+  class Diff < R slug('/(\d+)/(\d+)/diff')
     include HTMLDiff
     def get page_name, v1, v2
       page_name_spc = page_name.gsub(/_/,' ')
