@@ -55,8 +55,11 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
     ]
 end
 
-#rake test RUBY_FLAGS=''
+# Disable suprious warnings when running tests
+# submitted by Julian Tarkhanov
 
+Hoe::RUBY_FLAGS.replace ENV['RUBY_FLAGS'] || "-I#{%w(lib ext bin test).join(File::PATH_SEPARATOR)}" +
+  (Hoe::RUBY_DEBUG ? " #{RUBY_DEBUG}" : '')
 
 
 
