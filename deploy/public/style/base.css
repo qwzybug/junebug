@@ -75,7 +75,7 @@ body {
 #hd #search {
     float: right;
 /*    margin-top: 5px;*/
-    margin-right: 5px;
+    margin-right: 10px;
 }
 
 #hd #search input {

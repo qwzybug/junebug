@@ -255,7 +255,7 @@ module Junebug::Views
       
       span :id=>'userlinks' do
         if logged_in?
-          # text "Welcome, #{@state.user.username} - "
+          text "Hi, #{@state.user.username} - "
           a 'sign out', :href=>"#{R(Logout)}?return_to=#{@env['REQUEST_URI']}"
         else
           a 'sign in', :href=> "#{R(Login)}?return_to=#{@env['REQUEST_URI']}"
@@ -263,7 +263,7 @@ module Junebug::Views
       end
 
       span :id=>'search' do
-        text 'Search: '
+        # text 'Search: '
         form :action => R(Search), :method => 'post' do
           input :name => 'q', :type => 'text', :value=>(''), :accesskey => 's' 
           #input :type => 'submit', :name => 'search', :value => 'Search',
