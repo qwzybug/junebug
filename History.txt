@@ -1,3 +1,7 @@
+= 0.0.30 2007-04-21
+
+* Small style tweaks, make header smaller
+
 = 0.0.29 2007-04-15
 
 * Support Unicode wikiwords. Thanks Julian Tarkhanov
