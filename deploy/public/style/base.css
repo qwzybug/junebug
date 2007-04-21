@@ -74,11 +74,13 @@ body {
 
 #hd #search {
     float: right;
-    margin-top: 5px;
+/*    margin-top: 5px;*/
+    margin-right: 5px;
 }
 
 #hd #search input {
-    margin-bottom: 0px;
+/*    margin-bottom: 0px;*/
+    margin: 0px;
 }
 
 #hd a {

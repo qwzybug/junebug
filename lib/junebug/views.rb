@@ -34,7 +34,7 @@ module Junebug::Views
       br :clear=>'all'
     end
     _footer {
-      text "Last edited by <b>#{@version.user.username}</b> on #{@page.updated_at.strftime('%B %d, %Y %I:%M %p')}"
+      text "Page last edited by <b>#{@version.user.username}</b> on #{@page.updated_at.strftime('%B %d, %Y %I:%M %p')}"
       text " (#{diff_link(@page, @version)}) " if @version.version > 1
       br
       text '<b>[readonly]</b> ' if @page.readonly
@@ -255,13 +255,22 @@ module Junebug::Views
       
       span :id=>'userlinks' do
         if logged_in?
-          text "Welcome, #{@state.user.username} - "
+          # text "Welcome, #{@state.user.username} - "
           a 'sign out', :href=>"#{R(Logout)}?return_to=#{@env['REQUEST_URI']}"
         else
           a 'sign in', :href=> "#{R(Login)}?return_to=#{@env['REQUEST_URI']}"
         end
       end
-    
+
+      span :id=>'search' do
+        text 'Search: '
+        form :action => R(Search), :method => 'post' do
+          input :name => 'q', :type => 'text', :value=>(''), :accesskey => 's' 
+          #input :type => 'submit', :name => 'search', :value => 'Search',
+          #  :style=>'margin: 0 0 5px 5px;'
+        end
+      end
+   
       span :id=>'navlinks' do
         a 'Home',  :href => R(Show, Junebug.config['startpage'])
         text ' | '
@@ -272,15 +281,6 @@ module Junebug::Views
         a 'Help', :href => R(Show, "Junebug_help") 
       end
       
-      span :id=>'search' do
-        text 'Search: '
-        form :action => R(Search), :method => 'post' do
-          input :name => 'q', :type => 'text', :value=>(''), :accesskey => 's' 
-          #input :type => 'submit', :name => 'search', :value => 'Search',
-          #  :style=>'margin: 0 0 5px 5px;'
-        end
-      end
-
       br :clear => 'all'
       
       # if type == :static
