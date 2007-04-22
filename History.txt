@@ -1,6 +1,9 @@
 = 0.0.30 2007-04-21
 
 * Small style tweaks, make header smaller
+* Changed quicksave checkbox to 'minor update' button
+* Fixed issue with creation of pages when first viewing them, before explicitly saving
+* Orphans page (/all/orphans)
 
 = 0.0.29 2007-04-15
 

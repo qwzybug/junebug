@@ -149,7 +149,22 @@ module Junebug::Views
     _footer { '' }
   end
 
-
+  def orphans
+    _header :show
+    _body do
+      h1 @page_title
+      ul {
+        @pages.each { |p|
+          li{
+            a p.title, :href => R(Show, p.title_url)
+            text ' - empty page' if p.body.empty? 
+          }
+        }
+      }
+    end
+    _footer { '' }
+  end
+  
   def list
     _header :static
     _body do
@@ -273,9 +288,9 @@ module Junebug::Views
       span :id=>'navlinks' do
         a 'Home',  :href => R(Show, Junebug.config['startpage'])
         text ' | '
-        a 'Recent Changes', :href => R(Recent)
+        a 'Updates', :href => R(Recent)
         text ' | '
-        a 'All Pages', :href => R(List)
+        a 'Pages', :href => R(List)
         text ' | '
         a 'Help', :href => R(Show, "Junebug_help") 
       end

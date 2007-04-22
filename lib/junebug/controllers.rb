@@ -122,6 +122,17 @@ module Junebug::Controllers
     end
   end
 
+  class Orphans < R '/all/orphans'
+    def get
+      @page_title = "Orphan pages"
+      @pages = Page.find :all, :order => 'title'
+      @pages = @pages.reject do |page|
+        linked_pages = Page.find(:all, :conditions => ["body LIKE ?", "%#{page.title}%"]).length > 0
+      end
+      render :orphans
+    end
+  end
+
   class Recent < R '/all/recent'
     def get
       @page_title = "Recent Changes"
