@@ -117,7 +117,7 @@ module Junebug::Controllers
       page_name_spc = page_name.gsub(/_/,' ')
       @page = Page.find_by_title(page_name_spc)
       @page_title = "Backlinks for: #{page_name_spc}"
-      @pages = Page.find(:all, :conditions => ["body LIKE ?", "%[[#{page_name_spc}]]%"])
+      @pages = Page.find(:all, :conditions => ["body LIKE ? OR body LIKE ?", "%[[#{page_name_spc}]]%", "%[[#{page_name_spc}|%"])
       render :backlinks
     end
   end
@@ -127,7 +127,7 @@ module Junebug::Controllers
       @page_title = "Orphan pages"
       @pages = Page.find :all, :order => 'title'
       @pages = @pages.reject do |page|
-        linked_pages = Page.find(:all, :conditions => ["body LIKE ?", "%[[#{page.title}]]%"]).length > 0
+        linked_pages = Page.find(:all, :conditions => ["body LIKE ? OR body LIKE ?", "%[[#{page.title}]]%", "%[[#{page.title}|%"]).length > 0
       end
       render :orphans
     end
