@@ -27,9 +27,14 @@ module Junebug::Controllers
     def get page_name, version = nil
       redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
-      @page = Page.find(:first, :conditions=>['title = ?', page_name_spc])
-      @page = Page.create(:title => page_name_spc, :user_id=>@state.user.id) unless @page
-      @page = @page.versions.find_by_version(version) unless version.nil? or version == @page.version.to_s
+      @page = Page.find_by_title(page_name_spc)
+      if @page.nil?
+        # new page
+        @page = Page.new(:title=>page_name_spc, :body=>'') unless @page
+      else
+        # check for version request
+        @page = @page.versions.find_by_version(version) unless version.nil? or version == @page.version.to_s
+      end
       @page_title = "Editing: #{page_name_spc}"
       render :edit
     end
@@ -39,18 +44,23 @@ module Junebug::Controllers
       redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
       if input.submit == 'save'
-        if ! input.quicksave
-          attrs = { :body => input.post_body, :title => input.post_title, :user_id =>@state.user.id }
-          attrs[:readonly] = input.post_readonly if is_admin?
-          Page.find_or_create_by_title(page_name_spc).update_attributes(attrs)
+        attrs = { :body => input.post_body, :title => input.post_title, :user_id =>@state.user.id }
+        attrs[:readonly] = input.post_readonly if is_admin?
+        @page = Page.find_by_title(page_name_spc)
+        if @page.nil?
+          # new page
+          @page = Page.create(attrs)
         else
-          attrs = { :body => input.post_body }
-          attrs[:readonly] = input.post_readonly if is_admin?
-          page = Page.find_by_title(page_name_spc)
-          current_version = page.find_version(page.version)
-          current_version.update_attributes(attrs)
-          page.without_revision { page.update_attributes(attrs) }
+          @page.update_attributes(attrs)
         end
+        redirect Show, input.post_title.gsub(/ /,'_')
+      elsif input.submit == 'minor edit'
+        attrs = { :body => input.post_body }
+        attrs[:readonly] = input.post_readonly if is_admin?
+        page = Page.find_by_title(page_name_spc)
+        current_version = page.find_version(page.version)
+        current_version.update_attributes(attrs)
+        page.without_revision { page.update_attributes(attrs) }
         redirect Show, input.post_title.gsub(/ /,'_')
       else # cancel
         redirect Show, page_name

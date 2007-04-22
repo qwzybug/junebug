@@ -77,6 +77,9 @@ module Junebug::Views
             textarea @page.body, :name => 'post_body', :rows => 17, :cols => 80
           }
           input :type => 'submit', :name=>'submit', :value=>'cancel', :class=>'button', :style=>'float: right;'
+          if @page.user_id == @state.user.id
+            input :type => 'submit', :name=>'submit', :value=>'minor edit', :class=>'button', :style=>'float: right;', :accesskey => 'm'
+          end
           input :type => 'submit', :name=>'submit', :value=>'save', :class=>'button', :style=>'float: right;', :accesskey => 's'
           if is_admin?
             opts = { :type => 'checkbox', :value=>'1', :name => 'post_readonly' }
@@ -84,10 +87,6 @@ module Junebug::Views
             input opts
             text " Readonly "
             br
-          end
-          if @page.user_id == @state.user.id
-            input :type=>'checkbox', :value=>'1', :name=>'quicksave'
-            text " Minor edit (don't increment version) "
           end
 
         end
