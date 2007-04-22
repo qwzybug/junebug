@@ -157,7 +157,7 @@ module Junebug::Views
         @pages.each { |p|
           li{
             a p.title, :href => R(Show, p.title_url)
-            text ' - empty page' if p.body.empty? 
+            text ' - empty page' if p.body.nil? or p.body.empty? 
           }
         }
       }
