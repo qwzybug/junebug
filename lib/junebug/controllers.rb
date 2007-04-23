@@ -136,7 +136,8 @@ module Junebug::Controllers
   class Users < R '/all/users'
     def get
       @page_title = "Users"
-      @users = User.find(:all, :order => 'username')
+      #@users = User.find(:all, :order => 'username')
+      @users = User.find_by_sql("SELECT users.id, username, role, count(*) AS count FROM junebug_users AS users, junebug_page_versions AS versions WHERE users.id=versions.user_id GROUP BY users.id ORDER BY count DESC")
       render :users
     end
   end
@@ -145,7 +146,11 @@ module Junebug::Controllers
     def get username
       @page_title = "User info"
       @user = User.find_by_username(username)
-      @page_versions = Page::Version.find(:all, :conditions => ["user_id = ?", @user.id], :order=>'updated_at desc')
+      @versions = Page::Version.find(:all, :conditions => ["user_id = ?", @user.id], :order=>'updated_at desc')
+      @groups = Hash.new {|hash,key| hash[key] = []}
+      @versions.each { |p|
+        @groups[p.updated_at.strftime('%Y-%m-%d')].push(p)
+      }
       render :userinfo
     end
   end

@@ -106,7 +106,7 @@ module Junebug::Views
           li {
             a "version #{page.version}", :href => R(Show, @page.title_url, page.version)
             text " (#{diff_link(@page, page)}) " if page.version > 1
-            text' - created '
+            text' - edited '
             text last_updated(page)
             text ' ago by '
             strong page.user.username
@@ -170,7 +170,12 @@ module Junebug::Views
     _body do
       h1 "Users"
       ul {
-        @users.each { |u| li{ a u.username, :href => R(Userinfo, u.username) } }
+        @users.each { |u|
+          li {
+            a u.username, :href => R(Userinfo, u.username)
+            text " - #{u.count} edits"
+          }
+        }
       }
     end
     _footer { '' }
@@ -179,18 +184,21 @@ module Junebug::Views
   def userinfo
     _header :static
     _body do
-      h1 "User: #{@user.username}"
+      h1 "Edit history: #{@user.username}"
       
-      h2 "Edit history"
-      ul {
-        @page_versions.each { |pv|
-          li{
-            a pv.page.title, :href => R(Show, pv.page.title_url, pv.version)
-            text " v#{pv.version}"
-            text " (#{diff_link(pv.page, pv)}) " if pv.version > 1
-            text' - created '
-            text last_updated(pv)
-            text ' ago'
+      @groups.keys.sort.reverse.each { |key|
+        @versions = @groups[key]
+        h2 key
+        ul {
+          @versions.each { |pv|
+            li{
+              a pv.page.title, :href => R(Show, pv.page.title_url)
+              text ", v#{pv.version}"
+              text " (#{diff_link(pv.page, pv)}) " if pv.version > 1
+              # text' - edited '
+              # text last_updated(pv)
+              # text ' ago'
+            }
           }
         }
       }
