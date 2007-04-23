@@ -164,7 +164,40 @@ module Junebug::Views
     end
     _footer { '' }
   end
-  
+
+  def users
+    _header :static
+    _body do
+      h1 "Users"
+      ul {
+        @users.each { |u| li{ a u.username, :href => R(Userinfo, u.username) } }
+      }
+    end
+    _footer { '' }
+  end
+
+  def userinfo
+    _header :static
+    _body do
+      h1 "User: #{@user.username}"
+      
+      h2 "Edit history"
+      ul {
+        @user.page_versions.each { |pv|
+          li{
+            a pv.page.title, :href => R(Show, pv.page.title_url, pv.version)
+            text " v#{pv.version}"
+            text " (#{diff_link(pv.page, pv)}) " if pv.version > 1
+            text' - created '
+            text last_updated(pv)
+            text ' ago'
+          }
+        }
+      }
+    end
+    _footer { '' }
+  end
+
   def list
     _header :static
     _body do
@@ -291,6 +324,10 @@ module Junebug::Views
         a 'Updates', :href => R(Recent)
         text ' | '
         a 'Pages', :href => R(List)
+        text ' | '
+        a 'Users', :href => R(Users)
+        text ' | '
+        a 'Admin', :href => R(Orphans)
         text ' | '
         a 'Help', :href => R(Show, "Junebug_help") 
       end

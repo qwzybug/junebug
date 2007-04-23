@@ -133,6 +133,23 @@ module Junebug::Controllers
     end
   end
 
+  class Users < R '/all/users'
+    def get
+      @page_title = "Users"
+      @users = User.find(:all, :order => 'username')
+      render :users
+    end
+  end
+
+  class Userinfo < R '/userinfo/(\w+)'
+    def get username
+      @page_title = "User info"
+      @user = User.find_by_username(username)
+      render :userinfo
+    end
+  end
+
+
   class Recent < R '/all/recent'
     def get
       @page_title = "Recent Changes"

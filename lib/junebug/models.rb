@@ -13,6 +13,7 @@ module Junebug::Models
     validates_format_of :password, :with => /^([\w]*)$/
     validates_length_of :password, :within=>5..30
     has_many :pages
+    has_many :page_versions, :class_name => 'Junebug::Models::Page::Version'
 
     def username=(text)
       write_attribute(:username, (text ? text.strip.downcase : text) )
@@ -53,6 +54,7 @@ module Junebug::Models
   
   class Page::Version < Base
     belongs_to :user, :class_name=>"Junebug::Models::User", :foreign_key=>'user_id' # Hack to prevent camping error on initial load
+    belongs_to :page, :class_name=>"Junebug::Models::Page"
   end
 
   class CreateJunebug < V 1.0
