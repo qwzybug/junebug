@@ -145,6 +145,7 @@ module Junebug::Controllers
     def get username
       @page_title = "User info"
       @user = User.find_by_username(username)
+      @page_versions = Page::Version.find(:all, :conditions => ["user_id = ?", @user.id], :order=>'updated_at desc')
       render :userinfo
     end
   end

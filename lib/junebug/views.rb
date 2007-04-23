@@ -183,7 +183,7 @@ module Junebug::Views
       
       h2 "Edit history"
       ul {
-        @user.page_versions.each { |pv|
+        @page_versions.each { |pv|
           li{
             a pv.page.title, :href => R(Show, pv.page.title_url, pv.version)
             text " v#{pv.version}"
