@@ -60,7 +60,12 @@ module Junebug::Views
   def edit
     _header :show
     _body do
-      h1 @page_title
+      if @show_preview
+        div.preview {
+          h1 "#{@page.title}"
+          _markup @page.body
+        }
+      end
       div.formbox {
         form :method => 'post', :action => R(Edit, @page.title_url) do
           p { 
@@ -81,6 +86,7 @@ module Junebug::Views
             input :type => 'submit', :name=>'submit', :value=>'minor edit', :class=>'button', :style=>'float: right;', :accesskey => 'm'
           end
           input :type => 'submit', :name=>'submit', :value=>'save', :class=>'button', :style=>'float: right;', :accesskey => 's'
+          input :type => 'submit', :name=>'submit', :value=>'preview', :class=>'button', :style=>'float: right;', :accesskey => 'p'
           if is_admin?
             opts = { :type => 'checkbox', :value=>'1', :name => 'post_readonly' }
             opts[:checked] = 1 if @page.readonly

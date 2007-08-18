@@ -306,3 +306,10 @@ body {
     font-weight: bold;
     background-color: #d7e0ff;
 }
+
+div.preview {
+  border: 2px solid #bbf;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: transparent url(/images/draft.png) repeat scroll 0%;
+}
