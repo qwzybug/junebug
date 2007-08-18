@@ -35,17 +35,29 @@ class TestJunebug < Camping::FunctionalTest
     assert_match_body /Слово сказано/
   end
   
-  def test_login
+  def test_login_basic
+    get '/Welcome_to_Junebug/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
+
     post '/login', :username => 'admin', :password => 'password'
     assert_response :redirect
     assert_redirected_to '/Welcome_to_Junebug'
+
+    get '/Welcome_to_Junebug/edit'
+    assert_response :success
     
     get '/logout'
     assert_response :redirect
     assert_redirected_to '/Welcome_to_Junebug'
+
+    get '/Welcome_to_Junebug/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
   end
 
   def test_required_login
+    # existing pages
     get '/Welcome_to_Junebug/edit'
     assert_response :redirect
     assert_redirected_to '/login'
@@ -61,10 +73,27 @@ class TestJunebug < Camping::FunctionalTest
     get '/Welcome_to_Junebug/1/revert'
     assert_response :redirect
     assert_redirected_to '/login'
+
+    # page creation
+    get '/NonexistentPage/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
+    
+    get '/NonexistentPage/1/edit'
+    assert_response :redirect
+    assert_redirected_to '/login'
+
+    get '/NonexistentPage/delete'
+    assert_response :redirect
+    assert_redirected_to '/login'
+
+    get '/NonexistentPage/1/revert'
+    assert_response :redirect
+    assert_redirected_to '/login'
   end
   
-  def test_edit_cycle
-    get '/Welcome_to_Junebug/edit'
+  def test_page_editing
+    get '/TestPage1'
     assert_response :redirect
     assert_redirected_to '/login'
     
@@ -72,40 +101,60 @@ class TestJunebug < Camping::FunctionalTest
     assert_response :redirect
     assert_redirected_to '/Welcome_to_Junebug'
     
-    get '/Welcome_to_Junebug/edit'
+    get '/TestPage1/edit'
     assert_response :success
 
-    pagename = "Welcome to Junebug"
-    page = Junebug::Models::Page.find_by_title(pagename)
-    
-    # submit nochange
-    post "/#{page.title_url}/edit", :post_title=>page.title, :post_body=>page.body, :post_readonly=>page.readonly, :submit=>'save'
+    # create page
+    post "/TestPage1/edit", :post_title=>"TestPage1", :post_body=>"test body", :post_readonly=>"0", :submit=>'save'    
     assert_response :redirect
-    assert_redirected_to "/#{page.title_url}"
-    page2 = Junebug::Models::Page.find_by_title(page.title)
-    assert_equal page.title, page2.title
-    assert_equal page.body, page2.body
-    assert_equal page.user_id, page2.user_id
-    assert_equal page.readonly, page2.readonly
-    assert_equal page.version+1, page2.version
+    assert_redirected_to "/TestPage1"
+    
+    page = Junebug::Models::Page.find_by_title("TestPage1")
+    
+    assert_equal "TestPage1", page.title
+    assert_equal "test body", page.body
+    assert_equal 1,           page.user_id
+    assert_equal false,       page.readonly
+    assert_equal 1,           page.version
 
-    pagename = "Welcome to Junebug"
-    page = Junebug::Models::Page.find_by_title(pagename)
+    # edit, nochange
+    post "/TestPage1/edit", :post_title=>page.title, :post_body=>page.body, :post_readonly=>page.readonly, :submit=>'save'
+    assert_response :redirect
+    assert_redirected_to "/TestPage1"
+    
+    page2 = Junebug::Models::Page.find_by_title("TestPage1")
+    
+    assert_equal "TestPage1", page2.title
+    assert_equal "test body", page2.body
+    assert_equal 1,           page2.user_id
+    assert_equal false,       page2.readonly
+    assert_equal 2,           page2.version
     
     # submit edited title and body
-    post "/#{page.title_url}/edit", :post_title=>page.title+'2', :post_body=>page.body+'2', :post_readonly=>page.readonly, :submit=>'save'
+    post "/TestPage1/edit", :post_title=>'TestPage1xx', :post_body=>'test body xx', :post_readonly=>"0", :submit=>'save'
     assert_response :redirect
-    assert_redirected_to "/#{page.title_url+'2'}"
-    page2 = Junebug::Models::Page.find_by_title(page.title+'2')
-    assert_equal page.title+'2', page2.title
-    assert_equal page.body+'2', page2.body
-    assert_equal page.user_id, page2.user_id
-    assert_equal page.readonly, page2.readonly
-    assert_equal page.version+1, page2.version
+    assert_redirected_to "/TestPage1xx"
     
-    # set it back
-    post "/#{page2.title_url}/edit", :post_title=>page.title, :post_body=>page.body, :post_readonly=>page.readonly, :submit=>'save'
+    page3 = Junebug::Models::Page.find_by_title('TestPage1xx')
 
+    assert_equal "TestPage1xx",  page3.title
+    assert_equal "test body xx", page3.body
+    assert_equal 1,              page3.user_id
+    assert_equal false,          page3.readonly
+    assert_equal 3,              page3.version   
+    
+    # submit minor edit
+    post "/TestPage1xx/edit", :post_title=>"TestPage1yy", :post_body=>'test body yy', :post_readonly=>"0", :submit=>'minor edit'
+    assert_response :redirect
+    assert_redirected_to "/TestPage1xx" # not allowed to change the title in minor edit 
+    
+    page4 = Junebug::Models::Page.find_by_title('TestPage1xx')
+
+    assert_equal "TestPage1xx",  page4.title
+    assert_equal "test body yy", page4.body
+    assert_equal 1,              page4.user_id
+    assert_equal false,          page4.readonly
+    assert_equal 3,              page4.version # version doesn't change
   end
 
 
@@ -148,19 +197,19 @@ class TestPage < Camping::UnitTest
   end
   
   def test_valid_title
-    page = create(:title => 'TestPage')
+    page = create(:title => 'TestPage3')
     assert page.valid?
     
-    page = create(:title => 'Test Page')
+    page = create(:title => 'Test Page3')
     assert page.valid?
 
-    page = create(:title => 'Test-Page')
+    page = create(:title => 'Test-Page3')
     assert page.valid?
     
-    page = create(:title => 'test page')
+    page = create(:title => 'test page3')
     assert page.valid?
         
-    page = create(:title => 'test')
+    page = create(:title => 'test3')
     assert page.valid?
     
     page = create(:title => 't')
@@ -215,25 +264,39 @@ class TestPage < Camping::UnitTest
   end
 
   def test_spaces
-    page1 = create(:title => 'TestTitle5')
+    page1 = create(:title => 'TestTitle51')
     assert page1.valid?
-    assert_equal 'TestTitle5', page1.title
+    assert_equal 'TestTitle51', page1.title
     
     # test strip
-    page1 = create(:title => ' TestTitle6 ')
+    page1 = create(:title => ' TestTitle52 ')
     assert page1.valid?
-    assert_equal 'TestTitle6', page1.title
+    assert_equal 'TestTitle52', page1.title
 
-    page1 = create(:title => ' Test Title 7 ')
+    page1 = create(:title => ' Test Title 53 ')
     assert page1.valid?
-    assert_equal 'Test Title 7', page1.title
+    assert_equal 'Test Title 53', page1.title
     
     # test squeeze
-    page1 = create(:title => '  Test  Title  8  ')
+    page1 = create(:title => '  Test  Title  54  ')
     assert page1.valid?
-    assert_equal 'Test Title 8', page1.title
+    assert_equal 'Test Title 54', page1.title
   end
 
+  def test_basic_update
+    # create test page
+    page = create(:title => "TestUpdate")
+    assert page.valid?
+    assert_equal 1, page.version
+    
+    # update body
+    page.body = "New body"
+    page.save
+    assert page.valid?
+    assert_equal "TestUpdate", page.title
+    assert_equal "New body", page.body
+    assert_equal 2, page.version
+  end
 
 private
 

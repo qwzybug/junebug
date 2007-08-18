@@ -15,10 +15,14 @@ module Junebug::Controllers
 
   class Show < R slug, slug('/(\d+)')
     def get page_name, version = nil
-      redirect(Edit, page_name, 1) and return unless @page = Page.find_by_title(page_name.gsub(/_/,' '))
-      @page_title = @page.title
-      @version = (version.nil? or version == @page.version.to_s) ? @page : @page.versions.find_by_version(version)
-      render :show
+      @page = Page.find_by_title(page_name.gsub(/_/,' '))
+      if @page.nil?
+        logged_in? ? redirect(Edit, page_name, 1) : redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}")
+      else
+        @page_title = @page.title
+        @version = (version.nil? or version == @page.version.to_s) ? @page : @page.versions.find_by_version(version)
+        render :show
+      end
     end
   end
 
@@ -48,7 +52,6 @@ module Junebug::Controllers
         attrs = { :body => input.post_body }
         attrs[:readonly] = input.post_readonly if is_admin?
         if input.submit == 'minor edit'
-          puts @page.version
           current_version = @page.find_version(@page.version)
           current_version.update_attributes(attrs)
           @page.without_revision { @page.update_attributes(attrs) }

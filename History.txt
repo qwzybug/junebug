@@ -1,6 +1,7 @@
-= 0.0.32 2007-08-17
+= 0.0.32 2007-08-18
 
 * Added preview function.  Thanks Bob Showalter
+* Added more tests
 
 = 0.0.31 2007-04-22
 
