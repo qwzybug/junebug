@@ -298,9 +298,8 @@ module Junebug::Views
     return '' if txt.blank?
     titles = Junebug::Models::Page.find(:all, :select => 'title').collect { |p| p.title }
     txt.gsub!(Junebug::Models::Page::PAGE_LINK) do
-      page = title = $1
+      page = title = $1.strip
       title = $2 unless $2.empty?
-      page.strip!
       page_url = page.gsub(/ /, '_')
       if titles.include?(page)
         %Q{<a href="#{self/R(Show, page_url)}">#{title}</a>}
