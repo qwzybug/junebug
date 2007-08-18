@@ -1,3 +1,7 @@
+= 0.0.33 2007-08-18
+
+* Bugfix release to update manifest
+
 = 0.0.32 2007-08-18
 
 * Added preview function.  Thanks Bob Showalter

@@ -8,6 +8,7 @@ deploy/Rakefile
 deploy/config.yml
 deploy/console
 deploy/public/images/feed-icon-14x14.png
+deploy/public/images/draft.png
 deploy/public/style/base.css
 deploy/public/style/yui/fonts.css
 deploy/public/style/yui/reset.css
