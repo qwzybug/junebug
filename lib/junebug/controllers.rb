@@ -17,7 +17,7 @@ module Junebug::Controllers
     def get page_name, version = nil
       @page = Page.find_by_title(page_name.gsub(/_/,' '))
       if @page.nil?
-        logged_in? ? redirect(Edit, page_name, 1) : redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}")
+        logged_in? ? redirect(Edit, page_name, 1) : redirect("/login?return_to=#{CGI::escape('/'+page_name)}")
       else
         @page_title = @page.title
         @version = (version.nil? or version == @page.version.to_s) ? @page : @page.versions.find_by_version(version)
@@ -29,7 +29,7 @@ module Junebug::Controllers
   class Edit < R slug('/edit'), slug('/(\d+)/edit') 
     
     def get page_name, version = nil
-      redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
+      redirect("/login?return_to=#{CGI::escape('/'+page_name+'/edit')}") and return unless logged_in?
       page_name_spc = page_name.gsub(/_/,' ')
       @page = Page.find_by_title(page_name_spc)
       if @page.nil?
@@ -43,7 +43,7 @@ module Junebug::Controllers
     
     # FIXME: no error checking, also no verify quicksave/readonly rights
     def post page_name
-      redirect("/login?return_to=#{CGI::escape(@env['REQUEST_URI'])}") and return unless logged_in?
+      redirect('/login') and return unless logged_in? # shouldn't be here
       page_name_spc = page_name.gsub(/_/,' ')
       @page = Page.find_by_title(page_name_spc)
       if input.submit == 'cancel'
@@ -82,7 +82,7 @@ module Junebug::Controllers
   
   class Delete < R slug('/delete')
     def get page_name
-      redirect("/login") and return unless logged_in?
+      redirect("/login") and return unless logged_in? # shouldn't be here
       Page.find_by_title(page_name.gsub(/_/,' ')).destroy() if is_admin?
       redirect Junebug.startpage
     end
@@ -91,7 +91,7 @@ module Junebug::Controllers
 
   class Revert < R slug('/(\d)/revert')
     def get page_name, version
-      redirect("/login") and return unless logged_in?
+      redirect("/login") and return unless logged_in? # shouldn't be here
       Page.find_by_title(page_name.gsub(/_/,' ')).revert_to!(version) if is_admin?
       redirect Show, page_name
     end
@@ -224,6 +224,8 @@ module Junebug::Controllers
     def get
       @page_title = "Login/Create Account"
       @return_to = input.return_to
+      puts "\nBB" + @return_to.to_s
+      puts "input: #{input}"
       render :login
     end
 
@@ -256,6 +258,13 @@ module Junebug::Controllers
   class Logout
       def get
         @state.user = nil
+        puts "\nAA"
+        puts "input: #{input}"
+        # if input
+        #   puts "x" + input
+        #   puts "y" + input.return_to if input.return_to
+        # end
+        
         input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
       end
   end

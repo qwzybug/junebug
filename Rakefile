@@ -50,7 +50,7 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
       ['mongrel',      '>=1.0'],
       ['camping',      '>=1.5'],
       ['daemons',      '>=1.0.4'],
-      ['sqlite3-ruby', '>=1.1.0.1'],
+      ['sqlite3-ruby', '>=1.2'],
       ['activerecord', '>=1.15.1']
     ]
 end

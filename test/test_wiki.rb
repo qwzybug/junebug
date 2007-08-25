@@ -55,6 +55,25 @@ class TestJunebug < Camping::FunctionalTest
     assert_response :redirect
     assert_redirected_to '/login'
   end
+  
+  def test_return_to  
+    # post '/login', :username => 'admin', :password => 'password'
+    # assert_response :redirect
+    # assert_redirected_to '/Welcome_to_Junebug'
+    # 
+    # get '/logout'
+    # assert_response :redirect
+    # assert_redirected_to '/Welcome_to_Junebug'
+    # 
+    post '/login', :username => 'admin', :password => 'password', :return_to => "/TestPage7"
+    assert_response :redirect
+    assert_redirected_to '/TestPage7'
+
+    get '/logout', :return_to => '/TestPage7'
+    assert_response :redirect
+    assert_redirected_to '/TestPage7'
+  end
+
 
   def test_required_login
     # existing pages
