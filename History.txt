@@ -1,6 +1,7 @@
 = 0.0.34 2007-08-18
 
 * Remove spaces from wikilinks
+* Fix preview wikilink formatting bug
 
 = 0.0.33 2007-08-18
 
