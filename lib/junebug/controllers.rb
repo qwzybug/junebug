@@ -258,13 +258,6 @@ module Junebug::Controllers
   class Logout
       def get
         @state.user = nil
-        puts "\nAA"
-        puts "input: #{input}"
-        # if input
-        #   puts "x" + input
-        #   puts "y" + input.return_to if input.return_to
-        # end
-        
         input.return_to.blank? ? redirect(Junebug.startpage) : redirect(input.return_to)
       end
   end
