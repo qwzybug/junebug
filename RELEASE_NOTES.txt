@@ -2,7 +2,7 @@
 
 This release includes some css changes, so don't forget to rake update:everything
 
-Read the updating page at http://www.junebugwiki.com/JunebugUpdating
+Read the updating page at http://www.junebugwiki.com/Updating_Junebug
 
 
 = 0.0.28 2007-01-20

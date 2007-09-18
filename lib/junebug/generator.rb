@@ -1,5 +1,3 @@
-require 'fileutils'
-
 require 'junebug'
 require 'junebug/models'
 
