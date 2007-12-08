@@ -1,3 +1,10 @@
+= 0.0.35 2007-12-07
+
+This release includes some css changes, so don't forget to rake update:everything.  Read the updating page at http://www.junebugwiki.com/JunebugUpdating
+
+Also, ASCIIMathML support was added in this release.  Hopefully it doesn't cause problems with existing pages.  Try it out: paste `x^2+y_1+z_12^34` into a page
+
+
 = 0.0.32 2007-08-18
 
 This release includes some css changes, so don't forget to rake update:everything

@@ -46,6 +46,9 @@ ins {
 
 	
 /* PAGE STRUCTURE */
+html {
+    background:#d7d7d7;  
+}
 body {
     background:#d7d7d7;
     text-align: center;
@@ -185,6 +188,7 @@ body {
 
 .content h1 {
     font-size:  182%;
+    margin-top: 0;
     margin-bottom: 10px;
     border-bottom: 2px dotted #bbb;
 }
@@ -253,6 +257,16 @@ body {
 /*    font-family:"Bitstream Vera Sans Mono", "Monaco", "Courier", monospace;*/
     background: #f4f4f4;
     padding: 2px;
+}
+
+.content code.eqn {
+    display: block;
+    text-align: center;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 8px 20px;
+    margin: 15px 0px;
+    overflow: auto;
 }
 
 .content code.clean {

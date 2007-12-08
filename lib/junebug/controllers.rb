@@ -205,7 +205,7 @@ module Junebug::Controllers
     end
   end
 
-  class Static < R '(/images/.+)', '(/style/.+)'         
+  class Static < R '(/images/.+)', '(/style/.+)', '(/javascripts/.+)'
     MIME_TYPES = {'.css' => 'text/css', '.js' => 'text/javascript', '.jpg' => 'image/jpeg'}
     #PATH = __FILE__[/(.*)\//, 1]
     PATH = ENV['JUNEBUG_ROOT'] || File.expand_path('.')

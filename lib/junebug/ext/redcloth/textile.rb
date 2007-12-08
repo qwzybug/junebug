@@ -395,6 +395,13 @@ class RedCloth < String
         text.gsub!( /^ *(\\?)==([^=]+.*?)\1==/m ) do |m|
           $1.empty? ? "<notextile>#{$2}</notextile>" : "==#{$2}=="
         end
+        text.gsub!( /^ +(`[^`]+`)/ ) do |m|
+          "<code class=\"eqn\">#{$1}</code>"
+        end
+        text.gsub!( /(`[^`]+`)/ ) do |m|
+          "<notextile>#{$1}</notextile>"
+        end
+          
     end
 
     def glyphs_textile( text, level = 0 )

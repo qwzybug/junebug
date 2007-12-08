@@ -7,7 +7,8 @@ include Junebug::Models
 
 class TestJunebug < Camping::FunctionalTest
 
-  #fixtures :junebug_users
+  fixtures :junebug_users, :junebug_pages, :junebug_page_versions
+  
   def setup
     super
   end
@@ -38,7 +39,7 @@ class TestJunebug < Camping::FunctionalTest
   def test_login_basic
     get '/Welcome_to_Junebug/edit'
     assert_response :redirect
-    assert_redirected_to '/login'
+    assert_redirected_to '/login?return_to=%2FWelcome_to_Junebug%2Fedit'
 
     post '/login', :username => 'admin', :password => 'password'
     assert_response :redirect
@@ -53,26 +54,25 @@ class TestJunebug < Camping::FunctionalTest
 
     get '/Welcome_to_Junebug/edit'
     assert_response :redirect
-    assert_redirected_to '/login'
+    assert_redirected_to '/login?return_to=%2FWelcome_to_Junebug%2Fedit'
   end
   
   def test_return_to
-    # gets don't seem to pass query params correctly in testing mode, so i've removed them
     post '/login', :username => 'admin', :password => 'password'
     assert_response :redirect
     assert_redirected_to '/Welcome_to_Junebug'
     
-    # get '/logout'
-    # assert_response :redirect
-    # assert_redirected_to '/Welcome_to_Junebug'
+    get '/logout'
+    assert_response :redirect
+    assert_redirected_to '/Welcome_to_Junebug'
     
     post '/login', :username => 'admin', :password => 'password', :return_to => "/TestPage7"
     assert_response :redirect
     assert_redirected_to '/TestPage7'
 
-    # get '/logout', :return_to => '/TestPage7'
-    # assert_response :redirect
-    # assert_redirected_to '/TestPage7'
+    get '/logout', :return_to => '/TestPage7'
+    assert_response :redirect
+    assert_redirected_to '/TestPage7'
   end
 
 
@@ -80,11 +80,11 @@ class TestJunebug < Camping::FunctionalTest
     # existing pages
     get '/Welcome_to_Junebug/edit'
     assert_response :redirect
-    assert_redirected_to '/login'
+    assert_redirected_to '/login?return_to=%2FWelcome_to_Junebug%2Fedit'
     
     get '/Welcome_to_Junebug/1/edit'
     assert_response :redirect
-    assert_redirected_to '/login'
+    assert_redirected_to '/login?return_to=%2FWelcome_to_Junebug%2Fedit'
 
     get '/Welcome_to_Junebug/delete'
     assert_response :redirect
@@ -97,11 +97,11 @@ class TestJunebug < Camping::FunctionalTest
     # page creation
     get '/NonexistentPage/edit'
     assert_response :redirect
-    assert_redirected_to '/login'
+    assert_redirected_to '/login?return_to=%2FNonexistentPage%2Fedit'
     
     get '/NonexistentPage/1/edit'
     assert_response :redirect
-    assert_redirected_to '/login'
+    assert_redirected_to '/login?return_to=%2FNonexistentPage%2Fedit'
 
     get '/NonexistentPage/delete'
     assert_response :redirect
@@ -115,7 +115,7 @@ class TestJunebug < Camping::FunctionalTest
   def test_page_editing
     get '/TestPage1'
     assert_response :redirect
-    assert_redirected_to '/login'
+    assert_redirected_to '/login?return_to=%2FTestPage1'
     
     post '/login', :username => 'admin', :password => 'password'
     assert_response :redirect

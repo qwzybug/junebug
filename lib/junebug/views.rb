@@ -9,9 +9,10 @@ module Junebug::Views
       html {
         head {
           title @page_title ? @page_title : @page.title
-          link :href=>'/style/yui/reset.css', :type=>'text/css', :rel=>'stylesheet'
-          link :href=>'/style/yui/fonts.css', :type=>'text/css', :rel=>'stylesheet'
-          link :href=>'/style/base.css',      :type=>'text/css', :rel=>'stylesheet'
+          link :href=>'http://yui.yahooapis.com/2.4.0/build/reset-fonts-grids/reset-fonts-grids.css', :type=>'text/css', :rel=>'stylesheet'
+          link :href=>'http://yui.yahooapis.com/2.4.0/build/base/base-min.css', :type=>'text/css', :rel=>'stylesheet'
+          link :href=>'/style/base.css', :type=>'text/css', :rel=>'stylesheet'
+          script :type=>'text/javascript', :src=>'/javascripts/ASCIIMathML.js'          
           link :href=>Junebug.config['feedurl'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
         }
         body {
