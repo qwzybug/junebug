@@ -1,3 +1,7 @@
+= 0.0.36 2007-12-08
+
+* Make ASCIIMathML support optional (annoying warning msgs on safari)
+
 = 0.0.35 2007-12-07
 
 * Added support for YUI 2.4

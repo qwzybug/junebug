@@ -1,3 +1,10 @@
+= 0.0.36 2007-12-08
+
+ASCIIMathML support is made optional, since it inserts annoying warning messages on browsers that do not support mathml (like safari).
+
+To enable MathML support, add "mathml_enable: true" to config.yml.
+ 
+
 = 0.0.35 2007-12-07
 
 This release includes some css changes, so don't forget to rake update:everything.  Read the updating page at http://www.junebugwiki.com/JunebugUpdating

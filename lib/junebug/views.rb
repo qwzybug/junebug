@@ -12,7 +12,7 @@ module Junebug::Views
           link :href=>'http://yui.yahooapis.com/2.4.0/build/reset-fonts-grids/reset-fonts-grids.css', :type=>'text/css', :rel=>'stylesheet'
           link :href=>'http://yui.yahooapis.com/2.4.0/build/base/base-min.css', :type=>'text/css', :rel=>'stylesheet'
           link :href=>'/style/base.css', :type=>'text/css', :rel=>'stylesheet'
-          script :type=>'text/javascript', :src=>'/javascripts/ASCIIMathML.js'          
+          script( :type=>'text/javascript', :src=>'/javascripts/ASCIIMathML.js') if Junebug.config['mathml_enable']
           link :href=>Junebug.config['feedurl'], :rel => "alternate", :title => "Recently Updated Pages", :type => "application/atom+xml"
         }
         body {

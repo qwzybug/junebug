@@ -1,5 +1,6 @@
 # this what you want to be the default wiki page
 startpage: Welcome_to_Junebug
+mathml_enable: false
 
 # server configuration
 host: 127.0.0.1
