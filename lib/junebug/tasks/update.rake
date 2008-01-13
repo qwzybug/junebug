@@ -14,10 +14,11 @@ namespace :update do
     cp_r File.join(junebug_root, 'deploy', 'public'), '.'
   end
 
-  desc "Update rakefile"
+  desc "Update rakefile and wiki-runner"
   task :rakefile do
     junebug_root = Junebug::Config.rootdir
     cp File.join(junebug_root, 'deploy', 'Rakefile'), '.'
+    cp File.join(junebug_root, 'deploy', 'wiki'), '.'
   end
 
   desc "Update help pages"

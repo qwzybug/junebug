@@ -4,6 +4,7 @@ $:.unshift File.dirname(__FILE__) + "/../lib"
 require 'rubygems'
 require 'daemons'
 require 'fileutils'
+gem 'activesupport', '<=1.4.4'
 require 'junebug/config'
 
 JUNEBUG_ROOT = ENV['JUNEBUG_ROOT'] = File.dirname(File.expand_path(__FILE__))

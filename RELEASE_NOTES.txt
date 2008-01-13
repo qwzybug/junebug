@@ -1,3 +1,24 @@
+= 0.0.37 2008-01-13
+
+Active record 2.0 caused major breakage, and I haven't had the time to put together a fix until the code is ported to AR2.0.  For now, I've tied the code to a specific earlier AR version that works.
+
+To upgrade an existing system, you need to do the following:
+
+Edit the Rakefile in your wiki directory to read:
+
+--------------------------
+$:.unshift "../lib"
+
+require 'rubygems'
+require 'rake'
+
+gem 'activesupport', '<=1.4.4'
+require 'junebug/tasks'
+---------------------------
+
+Then, run "rake update:everything" and then you should be able to restart your wiki.
+ 
+
 = 0.0.36 2007-12-08
 
 ASCIIMathML support is made optional, since it inserts annoying warning messages on browsers that do not support mathml (like safari).

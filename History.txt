@@ -1,3 +1,9 @@
+= 0.0.37 2008-01-13
+
+Be sure to read the release notes
+
+* Since activerecord 2.0 breaks code, set dependency on earlier version.  Interim solution until Junebug is ported to AR 2.0.
+
 = 0.0.36 2007-12-08
 
 * Make ASCIIMathML support optional (annoying warning msgs on safari)

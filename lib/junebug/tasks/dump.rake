@@ -1,6 +1,4 @@
 require 'junebug'
-require 'junebug/models'
-require 'active_record'
 
 namespace :dump do
 

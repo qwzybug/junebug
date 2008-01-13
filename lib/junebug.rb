@@ -1,6 +1,9 @@
 $:.unshift File.dirname(__FILE__) # for running in foreground in dev
 $KCODE = 'u'
 require 'rubygems'
+gem 'activesupport', '<=1.4.4'
+gem 'activerecord', '<=1.15.6'
+gem 'mongrel', '<=1.1.2'
 gem 'camping', '>=1.5'
 require 'camping/session'
 

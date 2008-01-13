@@ -1,4 +1,4 @@
-require 'active_record'
+# require 'active_record'
 require 'junebug/ext/acts_as_versioned'
 
 module Junebug::Models

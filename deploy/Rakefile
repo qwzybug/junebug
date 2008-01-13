@@ -3,6 +3,7 @@ $:.unshift "../lib"
 require 'rubygems'
 require 'rake'
 
+gem 'activesupport', '<=1.4.4'
 require 'junebug/tasks'
 
 
