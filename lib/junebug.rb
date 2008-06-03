@@ -8,6 +8,7 @@ gem 'camping', '>=1.5'
 require 'active_support'
 require 'active_record'
 require 'camping'
+require 'camping/server'
 require 'camping/session'
 
 Camping.goes :Junebug
@@ -56,7 +57,8 @@ if __FILE__ == $0 || ENV['DAEMONS_ARGV']
   app = Rack::Builder.new do
     map Junebug.config['sitepath'] do
       use Rack::ShowExceptions
-      run ::Junebug
+      use Camping::Server::XSendfile
+      run Junebug
     end
   end
 
