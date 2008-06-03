@@ -5,6 +5,9 @@ gem 'activesupport', '<=1.4.4'
 gem 'activerecord', '<=1.15.6'
 gem 'mongrel', '<=1.1.2'
 gem 'camping', '>=1.5'
+require 'active_support'
+require 'active_record'
+require 'camping'
 require 'camping/session'
 
 Camping.goes :Junebug
@@ -25,7 +28,6 @@ module Junebug
 
   def self.create
     Junebug::Models.create_schema :assume => (Junebug::Models::Page.table_exists? ? 1.0 : 0.0)
-    Camping::Models::Session.create_schema
   end
   
   def self.connect
@@ -51,19 +53,14 @@ if __FILE__ == $0 || ENV['DAEMONS_ARGV']
   Junebug.connect
   Junebug.create
 
-  server = Mongrel::Camping::start( Junebug.config['host'], Junebug.config['port'], Junebug.config['sitepath'], Junebug)
+  app = Rack::Builder.new do
+    map Junebug.config['sitepath'] do
+      use Rack::ShowExceptions
+      run ::Junebug
+    end
+  end
 
   puts "** Junebug is running at http://#{Junebug.config['host']}:#{Junebug.config['port']}#{Junebug.config['sitepath']}"
 
-  thread = server.run
-
-  stop_method = lambda do
-    puts "** Junebug is stopping"
-    thread.kill
-  end
-
-  trap "INT", &stop_method
-  trap "TERM", &stop_method
-  
-  thread.join
+  Rack::Handler::Mongrel.run app, :Host => Junebug.config['host'], :Port => Junebug.config['port']
 end
