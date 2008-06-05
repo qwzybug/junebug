@@ -6,6 +6,9 @@ mathml_enable: false
 host: 127.0.0.1
 port: 3301
 
+# super-secret secret for sessions: change this!
+secret: Phyllophaga
+
 # if you want to have the wiki root running on something other than /
 sitepath: /
 

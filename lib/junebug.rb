@@ -27,6 +27,10 @@ require 'fileutils'
 module Junebug
   include Camping::Session
 
+  def state_secret
+    Junebug.config['secret']
+  end
+
   def self.create
     Junebug::Models.create_schema :assume => (Junebug::Models::Page.table_exists? ? 1.0 : 0.0)
   end
